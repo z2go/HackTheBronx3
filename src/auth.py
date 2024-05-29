@@ -52,9 +52,9 @@ def sign_up():
         if user:
             flash('Email already exists.', category='error')
         elif len(email) < 4:
-            flash('Email must be greater than 3 characters.', category='error')
+            flash('Email must be at least 4 characters.', category='error')
         elif len(user_name) < 2:
-            flash('First name must be greater than 1 character.', category='error')
+            flash('First name must at least 2 characters.', category='error')
         elif password1 != password2:
             flash('Passwords don\'t match.', category='error')
         elif len(password1) < 7:
