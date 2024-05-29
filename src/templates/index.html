@@ -1,64 +1,324 @@
-{% extends "base.html" %}{% block title %}Brewery{% endblock %}
+{% extends "base.html" %}
+{% block title %}Mind Garden{% endblock %}
 {% block content %}
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
-
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.css"  rel="stylesheet" />
-
-<!-- Main website code-->
-
-<div>
-  <!-- Making a button -->
-
-
-<!-- Modal toggle -->
-<button data-modal-target="default-modal" data-modal-toggle="default-modal" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
-  Upload Task
-</button>
-
-<!-- Main modal -->
-<div id="default-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-    <div class="relative p-4 w-full max-w-2xl max-h-full">
-        <!-- Modal content -->
-        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-            <!-- Modal header -->
-            <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                    Upload Task
-                </h3>
-                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="default-modal">
-                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                    </svg>
-                    <span class="sr-only">Cancel</span>
-                </button>
-            </div>
-            <!-- Modal body -->
-            <div class="p-4 md:p-5 space-y-4">
-                <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                    this is a test
-                </p>
-                <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                    this is a test2
-                </p>
-            </div>
-            <!-- Modal footer -->
-            <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-                <button data-modal-hide="default-modal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Upload</button>
-                <button data-modal-hide="default-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Cancel</button>
+<div class="flex flex-col min-h-screen">
+    <nav class="bg-green-400 text-white flex justify-between items-center p-1">
+        <img src="{{ url_for('static', filename='mindGardenLogo.png') }}" alt="Mind Garden Logo" class="h-20">
+        <p class="greentext"><span class="font-bold fancy">Mind Garden</span></p>
+        <div class="relative">
+            <button class="focus:outline-none focus:ring" onclick="document.getElementById('userMenuDropdown').classList.toggle('hidden');">
+              <i class="fas fa-user-circle text-3xl"></i>
+            </button>
+            
+            <div id="userMenuDropdown" class="absolute right-0 mt-2 py-2 w-48 bg-white rounded-md shadow-xl hidden">
+                <p class="block px-4 py-2 text-sm text-gray-700">{{userName}}</p>
+                <a href="{{ url_for('auth.logout') }}" class="block px-4 py-2 text-sm text-red-700 hover:bg-gray-100">Logout</a>
             </div>
         </div>
+    </nav>
+    <div class="flex flex-1">
+        <aside class="w-64 bg-green-600 text-white">
+            <div class="py-4 px-3 min-h-0">
+                <ul class="space-y-2">
+                    <li><a href="#" class="block p-2 rounded hover:bg-green-600 transition duration-300" data-target="dashboard">Dashboard</a></li>
+                    <li><a href="#" class="block p-2 rounded hover:bg-green-600 transition duration-300" data-target="mood_tracking">Mood Tracking</a></li>
+                    <li><a href="#" class="block p-2 rounded hover:bg-green-600 transition duration-300" data-target="mindfulness-meditation">Mindfulness & Meditation</a></li>
+                    <li><a href="#" class="block p-2 rounded hover:bg-green-600 transition duration-300" data-target="cbt-exercises">CBT Exercises</a></li>
+                    <li><a href="#" class="block p-2 rounded hover:bg-green-600 transition duration-300" data-target="cbt-exercises">Upload task</a></li>
+
+                    <li>
+                      <a class="block p-2 rounded hover:bg-green-600 transition duration-300" data-target="counseling">Counseling</a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+        <aside class="flex-1 bg-green-100">
+            <div class="p-4">
+                <!-- Dashboard section -->
+                <div id="dashboard" class="content-section active">
+                    <span class="shadowtext">Dashboard</span><br>
+                    <p>Access all that MindGarden has to offer!</p><br>
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="card hover:shadow-lg">
+                            <h2 class="font-bold">Mood Tracking</h2>
+                            <p>Gain insights into your emotional well-being with mood tracking. Understand patterns, and take proactive steps toward better mental health.</p>
+                            <a data-target="mood_tracking" class="rounded bg-green-200 p-2 mt-2">Visit</a>
+                        </div>
+                        <div class="card hover:shadow-lg">
+                            <h2 class="font-bold">Mindfulness & Meditation</h2>
+                            <p>Discover the transformative power of mindfulness and meditation. Cultivate presence, reduce stress, and find inner peace with these practices.</p>
+                            <a data-target="mindfulness-meditation" class="rounded bg-green-200 p-2 mt-2">Visit</a>
+                        </div>
+                        <div class="card hover:shadow-lg">
+                            <h2 class="font-bold">CBT Excercises</h2>
+                            <p>CBT exercises are practical techniques designed to help individuals recognize and change negative thinking patterns.</p>
+                            <a data-target = "cbt-exercises" class="rounded bg-green-200 p-2 mt-2">Visit</a>
+                        </div>
+                        <div class="card hidden md:block bg-green-100"></div>
+
+                        <div class="card hover:shadow-lg">
+                          <h2 class="font-bold">Counselor</h2>
+                          <p>Chat with a counselor one-on-one, who can help you solve your problems</p>
+                          <br>
+                          <a data-target = "counseling" class="rounded bg-green-200 p-2 mt-2">Visit</a>
+                      </div>
+                    </div>
+                </div>
+
+                <!-- Mindfulness and meditation section -->
+                <div id="mindfulness-meditation" class="content-section hidden">
+                    <h1 class="sectiontitle">Mindfulness & Meditation</h1>
+                    <p>Explore mindfulness and meditation techniques to improve mental well-being.</p><br>
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="card hover:shadow-lg">
+                            <h2 class="font-bold">4-7-8 Breathing</h2>
+                            <p>Learn to control your breath to reduce stress and improve focus.</p> <br>
+                            <a class="rounded bg-green-200 hover:bg-green-300 p-2 mt-2" data-target="breathing">Start Exercise</a>
+                        </div>
+                        <div class="card hover:shadow-lg">
+                            <h2 class="font-bold">Guided Meditation</h2>
+                            <p>Follow a guided meditation session to find inner peace.</p><br>
+                            <a class="rounded bg-green-200 hover:bg-green-300 p-2 mt-2" data-target="guided">Start Exercise</a>
+                        </div>
+                        <div class="card hover:shadow-lg">
+                            <h2 class="font-bold">Body Scan Meditation</h2>
+                            <p>Pay attention to various parts of your body to achieve a full body relaxation.</p><br>
+                            <a class="rounded bg-green-200 hover:bg-green-300 p-2 mt-2"data-target="body-scan">Start Exercise</a>
+                        </div>
+                    </div>
+                </div>
+                <div id="breathing" class="content-section hidden">
+                    <a href="#" class="back-button bg-green-100" data-target="mindfulness-meditation">
+                        <i class="fas fa-arrow-left"></i>
+                    </a>
+                    <br>
+                    <p>The 4-7-8 breathing technique, also known as "relaxing breath," is a simple yet effective breathing exercise that can help calm your mind and body, reduce stress, and promote relaxation. Here’s a step-by-step tutorial for a self-guided 4-7-8 breathing exercise:</p><br>
+                    <h1 class = "font-bold">Step 1: Find a Comfortable Position</h1>
+                    <p>Sit or lie down in a comfortable position. You can place your hands on your lap or rest them gently on your abdomen for better awareness of your breath.</p><br>
+                    <h1 class = "font-bold">Step 2: Relax Your Body</h1>
+                    <p>Close your eyes gently and take a few deep breaths to settle into your body. Allow your shoulders to relax, and soften any tension in your muscles.</p><br>
+                    <h1 class = "font-bold">Step 3: Prepare for the Breath Sequence</h1>
+                    <p>Part your lips slightly and exhale completely through your mouth, making a whooshing sound. This will help release any residual air from your lungs.</p><br>
+                    <h1 class = "font-bold">Step 4: Inhale Quietly Through Your Nose (4 Counts)</h1>
+                    <p>Close your mouth and inhale silently through your nose for a count of 4 seconds. Focus on filling your lungs fully with air, allowing your abdomen to rise as you breathe in.</p><br>
+                    <h1 class = "font-bold">Step 5: Hold Your Breath (7 Counts)</h1>
+                    <p>Once you've inhaled, hold your breath for a count of 7 seconds. Maintain a steady and comfortable hold without straining.</p><br>
+                    <h1 class = "font-bold">Step 6: Exhale Slowly Through Your Mouth (8 Counts)</h1>
+                    <p>Now, slowly exhale through your mouth, making a gentle whooshing sound, for a count of 8 seconds. Focus on fully emptying your lungs of air.</p><br>
+                    <h1 class = "font-bold">Step 7: Repeat the Cycle</h1>
+                    <p>Repeat this 4-7-8 breathing cycle for a total of four breaths. Inhale quietly through your nose for 4 seconds, hold your breath for 7 seconds, and exhale slowly through your mouth for 8 seconds.</p><br>
+                    <h1 class = "font-bold">Step 8: Relax and Observe</h1>
+                    <p>After completing the four breaths, take a moment to observe how your body feels. Notice any sensations of calmness or relaxation spreading throughout your body.</p><br>
+                    <h1 class = "font-bold">Step 9: Practice Regularly</h1>
+                    <p>Repeat this 4-7-8 breathing exercise several times a day or whenever you feel stressed or anxious. With regular practice, you'll find it easier to tap into a state of calm and relaxation.</p><br>
+                    <h1 class = "font-bold">Tips:</h1>
+                    <p>Use a Timer: If it helps, use a timer or a stopwatch app to maintain accurate counts for each phase of the breathing cycle.</p>
+                    <p>Stay Relaxed: Keep your facial muscles and body relaxed throughout the exercise.</p>
+                    <p>Focus on the Breath: Direct your attention solely to your breath and the counting, letting go of any distracting thoughts.</p>
+                </div>
+                <div id="guided" class="content-section hidden">
+                    <a href="#" class="back-button bg-green-100" data-target="mindfulness-meditation">
+                        <i class="fas fa-arrow-left"></i> 
+                    </a>
+                    <br>
+                    <p> Self-guided meditation can be a wonderful way to cultivate mindfulness and relaxation on your own terms. Here’s a step-by-step tutorial to help you get started:</p><br>
+                    <h1 class="font-bold">Step 1: Find a Quiet Space:</h1>
+                    <p>Choose a quiet and comfortable space where you can sit or lie down without distractions. This could be a corner of your room, a peaceful spot outdoors, or anywhere you feel at ease.</p><br>
+                    <h1 class="font-bold">Step 2: Get Comfortable</h1>
+                    <p>Sit or lie down in a position that feels comfortable to you. You can use cushions or a supportive chair if needed. The goal is to be relaxed yet alert.</p><br>
+                    <h1 class="font-bold">Step 3: Set a Time Limit</h1>
+                    <p>Decide on a duration for your meditation session. Starting with 5-10 minutes is great for beginners and you can gradually increase the time as you get more comfortable.</p><br>
+                    <h1 class="font-bold">Step 4: Begin with Deep Breathing:</h1>
+                    <p>Close your eyes and take a few deep breaths to settle your mind. Inhale slowly through your nose, allowing your abdomen to expand, then exhale slowly through your mouth, releasing any tension.</p><br>
+                    <h1 class="font-bold">Step 5: Focus on the Present Moment</h1>
+                    <p>Shift your attention to the sensations in your body or the sounds around you. Notice the feeling of your breath entering and leaving your body. This anchors you in the present moment.</p><br>
+                    <h1 class="font-bold">Step 6: Acknowledge Thoughts and Let Them Go</h1>
+                    <p>As thoughts arise (and they will), acknowledge them without judgment and gently let them go. Bring your focus back to your breath or the present moment each time your mind starts to wander.</p><br>
+                    <h1 class="font-bold">Step 7: Use Guided Imagery (Optional)</h1>
+                    <p>If you find it helpful, you can incorporate guided imagery. Visualize a peaceful place or imagine a calming scenario. This can deepen your relaxation and focus.</p><br>
+                    <h1 class="font-bold">Step 8: Practice Gratitude or Affirmations (Optional)</h1>
+                    <p>Towards the end of your meditation, you can practice gratitude or repeat positive affirmations silently. This can foster a sense of positivity and well-being.</p><br>
+                    <h1 class="font-bold">Step 9: End Mindfully</h1>
+                    <p>As your session comes to a close, gradually bring your awareness back to your surroundings. Wiggle your fingers and toes, stretch gently, and when you're ready, open your eyes.</p><br>
+                    <h1 class="font-bold">Step 10: Reflect</h1>
+                    <p>Take a moment to reflect on your experience. Notice any changes in how you feel physically, mentally, or emotionally. Over time, you'll likely notice increased calmness and clarity.</p><br>
+                    <h1 class="font-bold">Tips:</h1>
+                    <p>Consistency is Key: Aim to practice regularly, even if it's just a few minutes each day.</p>
+                    <p>Be Patient: Meditation is a skill that develops over time. Be gentle with yourself.</p>
+                    <p>Experiment: Explore different techniques like body scan meditation, loving-kindness meditation, or mindfulness of emotions to find what resonates best with you.</p><br>
+                    <p>By following these steps and incorporating meditation into your routine, you can experience the many benefits of mindfulness and self-awareness. Enjoy your journey of self-guided meditation!</p>
+                </div>
+                <div id="body-scan" class="content-section hidden">
+                    <a href="#" class="back-button bg-green-100" data-target="mindfulness-meditation">
+                        <i class="fas fa-arrow-left"></i> 
+                    </a>
+                    <br>
+                    <p>Self-guided meditation can be a wonderful way to cultivate mindfulness and relaxation on your own terms. Here’s a step-by-step tutorial to help you get started:</p><br>
+                    <h1 class="font-bold">Step 1: Find a Quiet and Comfortable Space</h1>
+                    <p>Choose a peaceful environment where you won't be disturbed. Lie down on your back in a comfortable position, such as on a yoga mat or bed, with your arms at your sides and legs slightly apart.</p><br>
+                    <h1 class="font-bold">Step 2: Settle into Your Body</h1>
+                    <p>Close your eyes and take a few deep breaths to settle into your body and the present moment. Allow any tension or stress to begin melting away as you focus on your breath.</p><br>
+                    <h1 class="font-bold">Step 3: Bring Awareness to Your Feet</h1>
+                    <p>Start by bringing your attention to your feet. Notice the sensations in your toes, the soles of your feet, and your heels. Feel the weight of your feet against the surface beneath you.</p><br>
+                    <h1 class="font-bold">Step 4: Move Up to Your Lower Legs</h1>
+                    <p>Shift your focus to your lower legs. Notice any sensations of warmth, coolness, tingling, or heaviness. Simply observe without trying to change anything.</p><br>
+                    <h1 class="font-bold">Step 5: Proceed to Your Knees and Thighs</h1>
+                    <p>Continue scanning upward to your knees and thighs. Be curious about the sensations you experience in this area of your body. Allow your breath to remain steady and relaxed.</p><br>
+                    <h1 class="font-bold">Step 6: Focus on Your Pelvic Area and Hips</h1>
+                    <p>Bring your attention to your pelvic area and hips. Notice any sensations of tightness, softness, or warmth. Take a moment to acknowledge any emotions that may arise.</p><br>
+                    <h1 class="font-bold">Step 7: Scan Your Abdomen and Lower Back</h1>
+                    <p>Move your awareness to your abdomen and lower back. Feel the gentle rise and fall of your belly with each breath. Allow any tension in this area to soften and release.</p><br>
+                    <h1 class="font-bold">Step 8: Pay Attention to Your Chest and Upper Back</h1>
+                    <p>Shift your focus to your chest and upper back. Notice the expansion and contraction of your ribcage as you breathe. Allow your breath to flow naturally and effortlessly.</p><br>
+                    <h1 class="font-bold">Step 9: Proceed to Your Shoulders, Arms, and Hands</h1>
+                    <p>Bring your attention to your shoulders, arms, and hands. Feel the weight of your arms resting on the surface beneath you. Notice any sensations in your hands and fingers.</p><br>
+                    <h1 class="font-bold">Step 10: Focus on Your Neck and Head</h1>
+                    <p>Finally, scan your neck, face, and head. Release any tension in your jaw, forehead, and scalp. Soften the muscles around your eyes and temples.</p><br>
+                    <h1 class="font-bold">Step 11: Embrace the Entire Body</h1>
+                    <p>Take a few moments to embrace your body as a whole. Feel the entire body resting comfortably and peacefully. Breathe into any areas that may still hold tension.</p><br>
+                    <h1 class="font-bold">Step 12: End with Mindful Awareness</h1>
+                    <p>As your body scan meditation comes to an end, take a few deep breaths and gradually bring your awareness back to the room. Wiggle your fingers and toes, stretch gently, and when you're ready, open your eyes.</p><br>
+                    <h1 class="font-bold">Tips:</h1>
+                    <p>Go Slowly: Take your time with each part of your body, savoring the sensations you notice.</p>
+                    <p>Stay Present: If your mind wanders, gently guide it back to the sensations in your body.</p>
+                    <p>Practice Regularly: Incorporate body scan meditation into your routine to deepen your awareness and relaxation.</p><br>
+                    <p>By practicing self-guided body scan meditation regularly, you can cultivate a deeper connection with your body, reduce stress, and enhance overall well-being. Enjoy the journey of exploration and self-discovery through this powerful meditation practice!</p>
+                </div>
+
+                <div id="counseling-content" class="flex-1 bg-gray-100 hidden">
+                  <!-- Counseling content is loaded from counseling.html -->
+                </div>
+               
+                <!-- Mood tracking section -->
+                <div id="mood_tracking-content" class="content-section hidden">
+                    
+                </div>
+
+                <div id="cbt-exercises" class="content-section hidden">
+                    <h1 class="sectiontitle">CBT Exercises</h1>
+                    <p>Try some of our CBT excercises!</p><br>
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="card hover:shadow-lg">
+                            <h2 class="font-bold">Thought Stopping</h2>
+                            <p> Interrupt and challenge intrusive or obsessive thoughts.</p><br>
+                            <a data-target="thought-stopping" class="rounded bg-green-200 hover:bg-green-300 p-2 mt-2">Start Excercise</a>
+                        </div>
+                        <div class="card hover:shadow-lg">
+                            <h2 class="font-bold">Behavioral Activation</h2>
+                            <p>Increase engagement in positive activities to counteract depression.</p><br>
+                            <a data-target="behavioral-activation" class="rounded bg-green-200 hover:bg-green-300 p-2 mt-2">Start Excercise</a>
+                        </div>
+                        <div class="card hover:shadow-lg">
+                            <h2 class="font-bold">Graded Exposure</h2>
+                            <p>Reduce anxiety by gradually confronting feared situations.</p><br>
+                            <a data-target = "graded-exposure" class="rounded bg-green-200 hover:bg-green-300 p-2 mt-2">Start Excercise</a>
+                        </div>
+                    </div>
+                </div>    
+     
+                <div id="thought-stopping"class="content-section hidden">
+                    <a href="#" class="back-button bg-green-100" data-target="cbt-exercises">
+                        <i class="fas fa-arrow-left"></i>
+                    </a>
+                    <h1 class="font-bold" style="font-size: xx-large;">Thought Stopping</h1><br>
+                    <p>Thought stopping is a cognitive behavioral technique designed to interrupt and challenge intrusive or negative thoughts. Here's a step-by-step guide for practicing self-guided thought stopping:</p><br>
+                    <h1 class="font-bold">Step 1: Recognize the Intrusive Thought</h1>
+                    <p>Start by becoming aware of the intrusive or negative thought that you want to interrupt. It could be a worry, a self-critical statement, or an unwanted memory.</p><br>
+                    <h1 class="font-bold">Step 2: Use a Mental Cue</h1>
+                    <p>Choose a simple mental cue to signal the interruption of the thought. This could be visualizing a red stop sign, saying "Stop!" to yourself internally, or imagining a loud buzzer sound.</p><br>
+                    <h1 class="font-bold">Step 3: Employ the Mental Cue</h1>
+                    <p>As soon as you notice the intrusive thought arising, immediately activate your chosen mental cue. Visualize the stop sign, say "Stop!" in your mind, or imagine the buzzer sound.</p><br>
+                    <h1 class="font-bold">Step 4: Interrupt the Thought</h1>
+                    <p>Consciously interrupt the thought using the mental cue. The goal is to disrupt the flow of the intrusive thought and shift your focus away from it.</p><br>
+                    <h1 class="font-bold">Step 5: Replace with a Positive or Neutral Thought</h1>
+                    <p>After interrupting the intrusive thought, quickly replace it with a more positive or neutral thought. For example, think about a pleasant memory, repeat a calming affirmation, or focus on your current surroundings.</p><br>
+                    <h1 class="font-bold">Step 6: Reinforce the Interruption</h1>
+                    <p>Repeat the mental cue and replacement thought as needed to reinforce the interruption of the intrusive thought. Be patient and persistent with this process.</p><br>
+                    <h1 class="font-bold">Step 7: Practice Regularly</h1>
+                    <p>Consistently practice thought stopping whenever intrusive thoughts arise throughout the day. Over time, this technique can become more automatic and effective.</p><br>
+                    <h1 class="font-bold">Tips for Success:</h1>
+                    <p>Be Mindful: Stay vigilant and attentive to your thoughts to catch intrusive ones early.</p>
+                    <p>Use Consistent Cues: Choose a mental cue that resonates with you and use it consistently for interruption.</p>
+                    <p>Replace Thought Quickly: Act swiftly to replace the intrusive thought with a positive or neutral alternative.</p>
+                    <p>Stay Patient: It may take time and practice to master this technique, so be patient with yourself.</p><br>
+                    <p>By regularly practicing self-guided thought stopping, you can gain more control over intrusive thoughts and cultivate a more positive and peaceful mental state. If you find persistent difficulty with intrusive thoughts, consider seeking support from a mental health professional for further guidance and strategies tailored to your needs.</p>
+                </div>
+                <div id="behavioral-activation"class="content-section hidden">
+                    <a href="#" class="back-button bg-green-100" data-target="cbt-exercises">
+                        <i class="fas fa-arrow-left"></i>
+                    </a>
+                    <h1 class="font-bold" style="font-size: xx-large;">Behavioral Activation</h1><br>
+                    <p>Behavioral activation is a core component of cognitive behavioral therapy (CBT) aimed at increasing engagement in meaningful and enjoyable activities to alleviate symptoms of depression or low mood. Here's a step-by-step guide for practicing self-guided behavioral activation:</p><br>
+                    <h1 class="font-bold">Step 1: Identify Values and Goals</h1>
+                    <p>Reflect on your values and personal goals. Consider activities that align with these values and bring a sense of purpose or enjoyment into your life.</p><br>
+                    <h1 class="font-bold">Step 2: Make a List of Activities</h1>
+                    <p>Create a list of activities that you used to enjoy or have always wanted to try. Include both small, manageable tasks and larger, more significant activities.</p><br>
+                    <h1 class="font-bold">Step 3: Start Small</h1>
+                    <p>Choose one or two simple activities from your list to begin with. Opt for activities that you feel capable of completing and that require minimal effort to start.</p><br>
+                    <h1 class="font-bold">Step 4: Set Specific Goals</h1>
+                    <p>Set specific and achievable goals for engaging in these activities. Define what you aim to accomplish and when you plan to do it. For example, "I will take a 20-minute walk in the park tomorrow morning."</p><br>
+                    <h1 class="font-bold">Step 5: Schedule Activities</h1>
+                    <p>Schedule the selected activities into your daily or weekly routine. Set aside dedicated time slots for each activity and prioritize them like appointments.</p><br>
+                    <h1 class="font-bold">Step 6: Eliminate Barriers</h1>
+                    <p>Identify any potential barriers or obstacles that may prevent you from engaging in these activities. Develop strategies to overcome these barriers, such as breaking tasks into smaller steps or seeking support from others.</p><br>
+                    <h1 class="font-bold">Step 7: Start Engaging in Activities</h1>
+                    <p>Begin engaging in the scheduled activities as planned. Focus on the process rather than the outcome, and pay attention to how you feel during and after completing each activity.</p><br>
+                    <h1 class="font-bold">Step 8: Monitor Your Mood</h1>
+                    <p>Keep track of your mood before and after engaging in activities using a mood diary or journal. Notice any changes in mood or energy levels associated with different activities.</p><br>
+                    <h1 class="font-bold">Step 9: Adjust and Experiment</h1>
+                    <p>Based on your observations, adjust your activity schedule as needed. Experiment with different types of activities to discover what brings you the most joy and fulfillment.</p><br>
+                    <h1 class="font-bold">Step 10: Gradually Increase Engagement</h1>
+                    <p>As you become more comfortable with behavioral activation, gradually increase the frequency and variety of activities. Challenge yourself to step out of your comfort zone and explore new experiences.</p><br>
+                    <h1 class="font-bold">Step 11: Celebrate Successes</h1>
+                    <p>Celebrate your achievements and successes along the way. Acknowledge your efforts in engaging in positive activities and recognize the impact on your mood and overall well-being.</p><br>
+                    <h1 class="font-bold">Step 12: Seek Professional Support (If Needed)</h1>
+                    <p>If you find it challenging to implement behavioral activation on your own or if symptoms persist, consider seeking guidance from a mental health professional trained in CBT.</p><br>
+                    <p>By practicing self-guided behavioral activation, you can proactively increase your level of activity, enhance positive emotions, and regain a sense of fulfillment and purpose in your life. Remember to be patient with yourself and stay committed to incorporating enjoyable and meaningful activities into your routine.</p>
+                </p>
+                </div>
+                <div id="graded-exposure"class="content-section hidden">
+                    <a href="#" class="back-button bg-green-100" data-target="cbt-exercises">
+                        <i class="fas fa-arrow-left"></i>
+                    </a>
+                    <h1 class="font-bold" style="font-size: xx-large;">Graded Exposure</h1><br>
+                    <p>Graded exposure is a behavioral therapy technique used to help individuals overcome fears and anxieties by gradually and systematically confronting feared situations or stimuli. Here's a step-by-step guide for practicing self-guided graded exposure:</p><br>
+                    <h1 class="font-bold">Step 1: Identify the Fear</h1>
+                    <p>Identify the specific fear or anxiety-provoking situation you want to address. This could be a phobia (e.g., fear of heights, spiders) or a situation that triggers anxiety (e.g., public speaking, crowded places).</p><br>
+                    <h1 class="font-bold">Step 2: Create a Fear Hierarchy</h1>
+                    <p>Develop a fear hierarchy or ladder by listing different levels of exposure to the feared situation, starting from the least anxiety-provoking to the most anxiety-provoking. For example:
+                        <br>Level 1: Looking at a picture of the feared object or situation.
+                        <br>Level 2: Watching a video of the feared situation.
+                        <br>Level 3: Being in the vicinity of the feared object or situation from a safe distance.
+                        <br>Level 4: Approaching closer to the feared object or situation.
+                        <br>Level 5: Interacting directly with the feared object or situation.</p><br>
+                    <h1 class="font-bold">Step 3: Rate Anxiety Levels</h1>
+                    <p>Assign a subjective anxiety rating (e.g., on a scale from 0 to 10) to each level of exposure in your fear hierarchy. This helps track your progress and monitor changes in anxiety levels over time.</p><br>
+                    <h1 class="font-bold">Step 4: Start with the Least Anxiety-Provoking Step</h1>
+                    <p>Begin with the lowest level of exposure that you feel comfortable with. This might involve engaging in an activity related to the feared situation that causes minimal anxiety.</p><br>
+                    <h1 class="font-bold">Step 5: Stay in the Exposure Situation</h1>
+                    <p>Stay in the exposure situation long enough to experience a decrease in anxiety or discomfort. Use relaxation techniques (e.g., deep breathing, progressive muscle relaxation) to manage anxiety if needed.</p><br>
+                    <h1 class="font-bold">Step 6: Repeat and Gradually Progress</h1>
+                    <p>Repeat exposure to each level of the fear hierarchy multiple times until you feel more comfortable and the anxiety decreases. Gradually progress to higher levels of exposure as you build confidence.</p><br>
+                    <h1 class="font-bold">Step 7: Practice Regularly</h1>
+                    <p>Incorporate graded exposure exercises into your daily or weekly routine. Consistency is key to desensitizing yourself to the feared situation over time.</p><br>
+                    <h1 class="font-bold">Step 8: Monitor Progress</h1>
+                    <p>Regularly monitor your progress by revisiting your fear hierarchy and updating anxiety ratings. Celebrate achievements and acknowledge improvements in coping with the feared situation.</p><br>
+                    <h1 class="font-bold">Step 9: Be Patient and Persistent</h1>
+                    <p>Be patient with yourself and recognize that overcoming fears takes time and effort. It's normal to experience setbacks or temporary increases in anxiety during exposure exercises.</p><br>
+                    <h1 class="font-bold">Step 10: Seek Support if Needed</h1>
+                    <p>If you find graded exposure challenging to practice on your own or if anxiety persists, consider seeking support from a therapist trained in exposure therapy or cognitive behavioral techniques.</p><br>
+                    <h1 class="font-bold">Tips for Success:</h1>
+                    <p>Start small and gradually increase exposure based on your comfort level.</p>
+                    <p>Use relaxation techniques to manage anxiety during exposure exercises.</p>
+                    <p>Stay committed to the process and celebrate progress, no matter how small.</p><br>
+                    <p>By following this step-by-step guide for self-guided graded exposure, you can systematically confront and overcome fears, reduce anxiety, and regain a sense of control over anxiety-provoking situations. Remember to practice self-care and seek professional guidance if needed throughout the process.</p>
+                    
+                    
+                </div>
+            </div>
+
+        </aside>
     </div>
 </div>
-
-
-  <h1>Welcome {{userName}}</h1>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.js"></script>
-
 {% endblock %}
-

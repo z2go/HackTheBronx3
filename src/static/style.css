@@ -1,4 +1,340 @@
-body {
-    font-family: "Courier New", Courier, monospace;
-      background-color: #ffffff;
+nav {
+  background-color: #34d399; 
+}
+
+.logo {
+  height: 50px; 
+}
+
+.sidebar {
+  background-color: #065f46; 
+}
+
+.sidebar a {
+  color: #ffffff;
+  transition: background-color 0.3s;
+}
+
+.sidebar a:hover, .sidebar a.active {
+  background-color: #047857; 
+}
+
+main {
+  background-color: rgb(49 196 141 / var(--tw-bg-opacity)); 
+}
+
+#userMenuDropdown.hidden {
+  display: none;
+}
+
+.fade-in {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+
+#chat-container {
+  /* background-color: #f0f4f8; */
+  border-radius: 8px;
+  padding: 15px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.user-message, .ai-message {
+  margin-bottom: 12px;
+  padding: 10px;
+  border-radius: 8px;
+  color: white;
+}
+
+.user-message {
+  background-color: #34d399;
+  align-self: flex-end;
+  text-align: right;
+}
+
+.ai-message {
+  background-color: #3182ce; 
+  align-self: flex-start;
+}
+ 
+#past-conversations {
+  width: 15%;  
+  overflow: auto;
+}
+
+.chat-area {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 10vh);
+}
+
+#chat-container {
+  flex-grow: 1;
+  overflow: auto;
+  margin-bottom: auto; 
+}
+
+#chat-form {
+  width: 100%;
+  position: sticky;
+  bottom: 0;
+  /* background: white; */
+}
+
+.card {
+  padding: 20px;
+  margin: 10px; 
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 8px;
+  background-color: white;
+  justify-content: space-between;
+}
+
+.hidden{
+  visibility: hidden;
+}
+
+.sectiontitle {
+  font-size: 2rem;
+  color: #38A169;
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #34D399; 
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-bottom: 20px;
+}
+
+.back-button i {
+  margin-right: 8px;
+}
+
+.back-button:hover {
+  background-color: #38B2AC; 
+  transform: translateY(-2px);
+}
+
+.back-button:active {
+  transform: translateY(1px);
+}
+
+
+.grid-cols-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.content-section {
+  padding: 20px;
+  border-radius: 8px;
+  margin: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.content-section h1 {
+  font-size: 1.75rem;
+  color: #2F855A; 
+  margin-bottom: 15px;
+}
+
+.content-section p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #4A5568; 
+  margin-bottom: 15px;
+}
+
+.content-section h1::before {
+  content: "";
+  display: block;
+  height: 2px;
+  background-color: #38B2AC;
+  margin-bottom: 10px;
+}
+
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: rgb(188 240 218/var(--tw-bg-opacity));
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+}
+
+.card:active {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 7px rgba(0, 0, 0, 0.2);
+}
+
+.card a {
+  display: inline-block;
+  background-color: #34D399;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.card a:hover {
+  background-color: #38B2AC; 
+  transform: scale(1.05);
+}
+
+.card a:active {
+  background-color: #319795; 
+  transform: scale(0.95);
+}
+
+.greentext {
+  font-size: 3vw;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1;
+}
+
+.fancy {
+  @supports (background-clip: text) or (-webkit-background-clip: text) {
+    background-image: 
+      url("data:image/svg+xml,%3Csvg width='2250' height='900' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg%3E%3Cpath fill='%2300A080' d='M0 0h2255v899H0z'/%3E%3Ccircle cx='366' cy='207' r='366' fill='%2300FDCF'/%3E%3Ccircle cx='1777.5' cy='318.5' r='477.5' fill='%2300FDCF'/%3E%3Ccircle cx='1215' cy='737' r='366' fill='%23008060'/%3E%3C/g%3E%3C/svg%3E%0A");
+    background-size: 110% auto;
+    background-position: center;
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
   }
+}
+
+.shadowtext {
+  font-weight: bold;
+  font-size: 2.5vw;
+  color: rgb(14 159 110/var(--tw-bg-opacity));
+  text-align: center;
+  letter-spacing: 5px;
+  text-shadow: 0 2px 1px rgb(132 225 188/var(--tw-bg-opacity)), 
+      -1px 3px 1px rgb(49 196 141/var(--tw-bg-opacity)), 
+      -2px 5px 1px rgb(132 225 188/var(--tw-bg-opacity));
+}
+
+#past-conversations {
+  height: 100vh;
+  /* background-color: #68D391; */
+  color: white;
+}
+
+#past-conversations h2 {
+  border-bottom: 2px solid white;
+}
+
+#message-input {
+  background-color: white;
+  border: 1px solid #CBD5E0; 
+}
+
+#conversation-list li:hover {
+  background-color: #38A169; 
+}
+
+#conversation-list li {
+  background-color: #48BB78; 
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+button {
+  transition: transform 0.1s ease-in-out;
+}
+
+button:hover {
+  transform: scale(1.02);
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+#start-new-chat, #save-conversation {
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  text-align: center;
+}
+
+#start-new-chat:hover, #save-conversation:hover {
+  background-color: #4299E1; 
+}
+
+
+/* Mood tracking stying */
+
+.tabs {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+}
+
+.tab-button {
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.tab-button:hover {
+  background-color: #48BB78; 
+}
+
+.content-section {
+  flex-grow: 1;
+  padding: 20px;
+  overflow: auto;
+}
+
+#diary-list li {
+  background-color: #FFFFFF; 
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#diary-list li button {
+  background-color: #F56565; 
+  color: white;
+  float: right;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+#diary-list li button:hover {
+  background-color: #E53E3E; 
+}
+
+#diary-list {
+  max-height: 70vh; 
+  overflow-y: auto;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
