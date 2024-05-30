@@ -25,6 +25,8 @@ class User(db.Model, UserMixin):
     first_name = db.Column(db.String(150))
     about_me = db.Column(db.String(20000), default="")
     
+
+    
     messages = db.relationship("Message")
 
     def __init__(self, email, first_name, password):
