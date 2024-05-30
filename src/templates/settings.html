@@ -3,15 +3,9 @@
 {% block content %}
 <span class="shadowtext">Settings</span><br>
 <div class="grid grid-cols-3 gap-4">
-    <div class="card hover:shadow-lg">
-        <h2 class="font-bold">Friends</h2>
-        <p>Place Holder</p>
-        <a href="{{ url_for('views.friends') }}" class="rounded bg-blue-200 p-2 mt-2">Visit</a>
-    </div>
-    <div class="card hover:shadow-lg">
-        <h2 class="font-bold">Events</h2>
-        <p>Place Holder</p>
-        <a href="{{ url_for('views.events') }}" class="rounded bg-blue-200 p-2 mt-2">Visit</a>
+    <div class="form-group has-icon fa-user mb-4">
+        <label class="movable" for="firstName">Name</label>
+        <input type="text" class="form-control form-field" id="data_1" name="data_1" />
     </div>
 </div>
 {% endblock %}
