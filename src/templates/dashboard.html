@@ -4,14 +4,30 @@
 <span class="shadowtext">Dashboard</span><br>
 <div class="grid grid-cols-3 gap-4">
     <div class="card hover:shadow-lg">
-        <h2 class="font-bold">Friends</h2>
-        <p>Place Holder</p>
-        <a href="{{ url_for('views.friends') }}" class="rounded bg-blue-200 p-2 mt-2">Visit</a>
+        <h2 class="font-bold">Explore Jobs</h2>
+        <p>See what jobs near you are available.</p>
+        <a href="{{ url_for('views.explore_jobs') }}" class="rounded bg-blue-200 p-2 mt-2">Visit</a>
     </div>
+
+    <div class="card hover:shadow-lg">
+        <h2 class="font-bold">Network</h2>
+        <p>Chat with people you have connected with. This can be friends to work contacts and even job recuiters.</p>
+        <a href="{{ url_for('views.network') }}" class="rounded bg-blue-200 p-2 mt-2">Visit</a>
+    </div>
+
     <div class="card hover:shadow-lg">
         <h2 class="font-bold">Events</h2>
-        <p>Place Holder</p>
+        <p>Learn about what is happening around you.</p>
         <a href="{{ url_for('views.events') }}" class="rounded bg-blue-200 p-2 mt-2">Visit</a>
     </div>
+
+    <div class="card hover:shadow-lg">
+        <h2 class="font-bold">Notifications</h2>
+        <p>Check updates related to your jobs, friend requests, and events happening around you.</p>
+        <a href="{{ url_for('views.notifications') }}" class="rounded bg-blue-200 p-2 mt-2">Visit</a>
+    </div>
+    <!-- Make it a settings icon -->
+        <h2 class="font-bold">Settings</h2>
+        <a href="{{ url_for('views.settings') }}" class="rounded bg-blue-200 p-2 mt-2">Visit</a>
 </div>
 {% endblock %}

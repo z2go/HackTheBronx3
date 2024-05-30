@@ -19,10 +19,10 @@ def dashboard():
 def events():
     return render_template("events.html")
 
-@views.route('/friends', methods=['GET'])
+@views.route('/network', methods=['GET'])
 @login_required
-def friends():
-    return render_template("friends.html", user=current_user)
+def network():
+    return render_template("network.html", user=current_user)
 
 @views.route('/notifications', methods=['GET'])
 @login_required

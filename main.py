@@ -2,6 +2,8 @@ from flask_login import current_user
 from flask import request, session  
 from src import create_app
 
+import socketio
+
 app = create_app()
 
 if __name__ == '__main__':

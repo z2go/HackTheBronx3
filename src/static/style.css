@@ -170,7 +170,7 @@ main {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   border-radius: 8px;
   overflow: hidden;
-  background-color: rgb(188 240 218/var(--tw-bg-opacity));
+  background-color: rgb(96 165 250/var(--tw-bg-opacity));
 }
 
 .card:hover {
@@ -218,6 +218,9 @@ main {
     color: transparent;
     -webkit-background-clip: text;
     background-clip: text;
+
+    /* Make blue */
+    
   }
 }
 
@@ -227,9 +230,9 @@ main {
   color: #1e3a8a; /* Navy Blue */
   text-align: center;
   letter-spacing: 5px;
-  text-shadow: 0 2px 1px rgb(132 225 188/var(--tw-bg-opacity)), 
-      -1px 3px 1px rgb(49 196 141/var(--tw-bg-opacity)), 
-      -2px 5px 1px rgb(132 225 188/var(--tw-bg-opacity));
+  text-shadow: 0 2px 1px rgb(96 165 250/var(--tw-bg-opacity)), 
+      -1px 3px 1px rgb(37 99 235/var(--tw-bg-opacity)), 
+      -2px 5px 1px rgb(59 130 246/var(--tw-bg-opacity));
 }
 
 #past-conversations {
