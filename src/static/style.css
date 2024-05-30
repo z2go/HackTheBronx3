@@ -1,5 +1,5 @@
 nav {
-  background-color: #34d399; 
+  background-color: #1e3a8a; /* Navy Blue */
 }
 
 .logo {
@@ -7,7 +7,7 @@ nav {
 }
 
 .sidebar {
-  background-color: #065f46; 
+  background-color: #1e40af; /* Blue */
 }
 
 .sidebar a {
@@ -16,11 +16,11 @@ nav {
 }
 
 .sidebar a:hover, .sidebar a.active {
-  background-color: #047857; 
+  background-color: #1d4ed8; /* Lighter Blue */
 }
 
 main {
-  background-color: rgb(49 196 141 / var(--tw-bg-opacity)); 
+  background-color: #e5e7eb; /* Light Gray */
 }
 
 #userMenuDropdown.hidden {
@@ -36,9 +36,7 @@ main {
   to { opacity: 1; }
 }
 
-
 #chat-container {
-  /* background-color: #f0f4f8; */
   border-radius: 8px;
   padding: 15px;
   max-height: 400px;
@@ -53,16 +51,16 @@ main {
 }
 
 .user-message {
-  background-color: #34d399;
+  background-color: #1e3a8a; /* Navy Blue */
   align-self: flex-end;
   text-align: right;
 }
 
 .ai-message {
-  background-color: #3182ce; 
+  background-color: #3182ce; /* Blue */
   align-self: flex-start;
 }
- 
+
 #past-conversations {
   width: 15%;  
   overflow: auto;
@@ -84,7 +82,6 @@ main {
   width: 100%;
   position: sticky;
   bottom: 0;
-  /* background: white; */
 }
 
 .card {
@@ -103,18 +100,17 @@ main {
 
 .sectiontitle {
   font-size: 2rem;
-  color: #38A169;
+  color: #1e40af; /* Blue */
   text-align: center;
   margin-bottom: 20px;
   font-weight: bold;
 }
 
-
 .back-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background-color: #34D399; 
+  background-color: #1e3a8a; /* Navy Blue */
   color: white;
   padding: 8px 16px;
   border-radius: 8px;
@@ -128,14 +124,13 @@ main {
 }
 
 .back-button:hover {
-  background-color: #38B2AC; 
+  background-color: #1d4ed8; /* Lighter Blue */
   transform: translateY(-2px);
 }
 
 .back-button:active {
   transform: translateY(1px);
 }
-
 
 .grid-cols-3 {
   display: grid;
@@ -152,14 +147,14 @@ main {
 
 .content-section h1 {
   font-size: 1.75rem;
-  color: #2F855A; 
+  color: #1e3a8a; /* Navy Blue */
   margin-bottom: 15px;
 }
 
 .content-section p {
   font-size: 1rem;
   line-height: 1.6;
-  color: #4A5568; 
+  color: #4a5568; /* Gray */
   margin-bottom: 15px;
 }
 
@@ -167,7 +162,7 @@ main {
   content: "";
   display: block;
   height: 2px;
-  background-color: #38B2AC;
+  background-color: #1d4ed8; /* Lighter Blue */
   margin-bottom: 10px;
 }
 
@@ -190,7 +185,7 @@ main {
 
 .card a {
   display: inline-block;
-  background-color: #34D399;
+  background-color: #1e3a8a; /* Navy Blue */
   color: white;
   padding: 8px 16px;
   border-radius: 4px;
@@ -198,16 +193,16 @@ main {
 }
 
 .card a:hover {
-  background-color: #38B2AC; 
+  background-color: #1d4ed8; /* Lighter Blue */
   transform: scale(1.05);
 }
 
 .card a:active {
-  background-color: #319795; 
+  background-color: #1e40af; /* Blue */
   transform: scale(0.95);
 }
 
-.greentext {
+.bluetext {
   font-size: 3vw;
   text-transform: uppercase;
   text-align: center;
@@ -229,7 +224,7 @@ main {
 .shadowtext {
   font-weight: bold;
   font-size: 2.5vw;
-  color: rgb(14 159 110/var(--tw-bg-opacity));
+  color: #1e3a8a; /* Navy Blue */
   text-align: center;
   letter-spacing: 5px;
   text-shadow: 0 2px 1px rgb(132 225 188/var(--tw-bg-opacity)), 
@@ -239,7 +234,6 @@ main {
 
 #past-conversations {
   height: 100vh;
-  /* background-color: #68D391; */
   color: white;
 }
 
@@ -253,11 +247,11 @@ main {
 }
 
 #conversation-list li:hover {
-  background-color: #38A169; 
+  background-color: #1e3a8a; /* Navy Blue */
 }
 
 #conversation-list li {
-  background-color: #48BB78; 
+  background-color: #3182ce; /* Blue */
   margin-bottom: 10px;
   padding: 10px;
   border-radius: 8px;
@@ -286,9 +280,6 @@ button:active {
   background-color: #4299E1; 
 }
 
-
-/* Mood tracking stying */
-
 .tabs {
   display: flex;
   justify-content: space-around;
@@ -301,7 +292,7 @@ button:active {
 }
 
 .tab-button:hover {
-  background-color: #48BB78; 
+  background-color: #3182ce; /* Blue */
 }
 
 .content-section {
