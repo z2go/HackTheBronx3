@@ -47,11 +47,11 @@
                                 </p>
                                 <div class="form-group">
                                     <label for="Task_Title" class="text-xl font-semibold text-gray-900 dark:text-white">What is the name of the task?</label>
-                                    <input type="text" id="Task_Title" name="Task_Title" class="form-control form-field" required>
+                                    <input type="text" id="Task_Title" name="Task_Title" class="form-control form-field" placeholder="Internship at Google" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="Task_Description" class="text-xl font-semibold text-gray-900 dark:text-white">What is the description of the task?</label>
-                                    <textarea id="Task_Description" name="Task_Description" class="form-control form-field" rows="4" required>Enter text here...</textarea>
+                                    <textarea id="Task_Description" name="Task_Description" class="form-control form-field" rows="4" placeholder="Enter text here..." required></textarea>
                                 </div>
                                 <div class="form-group">
                                     <label for="Task_Time_Hours" class="text-xl font-semibold text-gray-900 dark:text-white">How long would the task take?</label>
@@ -69,7 +69,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="Task_Skills" class="text-xl font-semibold text-gray-900 dark:text-white">What skills are you looking for?</label>
-                                    <textarea id="Task_Skills" name="Task_Skills" class="form-control form-field" rows="4" required>Enter text here...</textarea>
+                                    <textarea id="Task_Skills" name="Task_Skills" class="form-control form-field" rows="4" placeholder="Enter text here..." required></textarea>
                                 </div>
                             </div>
                             <!-- Modal footer -->
@@ -81,7 +81,7 @@
                     </div>
                 </div>
             </div>
-            <div id="userMenuDropdown" class="absolute right-0 mt-2 py-2 w-48 bg-white rounded-md shadow-xl hidden">
+            <div id="userMenuDropdown" class="absolute right-0 mt-2 py-4 w-48 bg-white rounded-md shadow-xl hidden">
                 <p class="block px-4 py-2 text-sm text-gray-700">{{ userName }}</p>
                 <a href="{{ url_for('auth.logout') }}" class="block px-4 py-2 text-sm text-red-700 hover:bg-gray-100">Logout</a>
             </div>

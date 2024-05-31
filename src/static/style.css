@@ -209,6 +209,10 @@ main {
   line-height: 1;
 }
 
+input, select, textarea{
+  color: #000000 !important;
+}
+
 .fancy {
   @supports (background-clip: text) or (-webkit-background-clip: text) {
     background-image: 
