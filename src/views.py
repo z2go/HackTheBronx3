@@ -31,7 +31,7 @@ def upload_job():
     )
     db.session.add(new_job)
     db.session.commit()
-    
+
     return redirect(url_for('views.explore_jobs'))
 
 @views.route('/upload_resume', methods=['POST'])
@@ -89,7 +89,7 @@ def events():
 @views.route('/network', methods=['GET'])
 @login_required
 def network():
-    return render_template("network.html")
+    return render_template("network.html", friends=current_user.friends)
 
 @views.route('/notifications', methods=['GET'])
 @login_required

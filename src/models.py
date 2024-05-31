@@ -65,6 +65,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(150))
     first_name = db.Column(db.String(150))
     about_me = db.Column(db.String(20000), default="")
+    friends = db.Column(db.ARRAY(db.Integer))
     
     
     messages = db.relationship("Message")
