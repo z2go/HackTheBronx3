@@ -34,6 +34,12 @@ def upload_job():
     
     return redirect(url_for('views.explore_jobs'))
 
+@views.route('/upload_resume', methods=['POST'])
+@login_required
+def upload_resume():
+    pass
+    ##TODO
+
 @views.route("/")
 @login_required
 def dashboard():

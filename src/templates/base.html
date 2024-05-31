@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Bronx-Inn{% endblock %}</title>
@@ -18,12 +19,29 @@
             <button class="focus:outline-none focus:ring" onclick="document.getElementById('userMenuDropdown').classList.toggle('hidden');">
                 <i class="fas fa-user-circle text-3xl"></i>
             </button>
-            <!-- Modal toggle -->
-            <button data-modal-target="default-modal" data-modal-toggle="default-modal" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" type="button">
-                Upload Jobs
-            </button>
-            <!-- Main modal -->
-            <div id="default-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                        
+            <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">+
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                </svg>
+                </button>
+                
+                <!-- Dropdown menu -->
+                <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+                    <li>
+                        <button data-modal-target="job-modal" data-modal-toggle="job-modal" class="block text-blue  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" type="button">
+                            Create Job
+                          </button>
+                    </li>
+                    <li>
+                        <button data-modal-target="resume-modal" data-modal-toggle="resume-modal" class="block text-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" type="button">Upload Resume</button>
+                    </li>
+                    </ul>
+                </div>
+    
+ 
+            <!-- Jobs modal -->
+            <div id="job-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                 <div class="relative p-4 w-full max-w-2xl max-h-full">
                     <!-- Modal content -->
                     <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
@@ -32,7 +50,7 @@
                             <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
                                 Upload Jobs
                             </h3>
-                            <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="default-modal">
+                            <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="job-modal">
                                 <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                                 </svg>
@@ -47,12 +65,14 @@
                                 </p>
                                 <div class="form-group">
                                     <label for="Task_Title" class="text-xl font-semibold text-gray-900 dark:text-white">What is the name of the task?</label>
-                                    <input type="text" id="Task_Title" name="Task_Title" class="form-control form-field" placeholder="Internship at Google" required>
+                                </div>
+                                <div>
+                                    <input type="text" id="Task_Title" name="Task_Title" class="form-control form-field" placeholder="Title" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="Task_Description" class="text-xl font-semibold text-gray-900 dark:text-white">What is the description of the task?</label>
-                                    <textarea id="Task_Description" name="Task_Description" class="form-control form-field" rows="4" placeholder="Enter text here..." required></textarea>
                                 </div>
+                                <textarea id="Task_Description" name="Task_Description" class="form-control form-field" rows="4" cols="50" placeholder="Enter text here..." required></textarea>
                                 <div class="form-group">
                                     <label for="Task_Time_Hours" class="text-xl font-semibold text-gray-900 dark:text-white">How long would the task take?</label>
                                     <div class="flex space-x-2">
@@ -63,19 +83,74 @@
                                 <div class="form-group">
                                     <label for="Task_Pay" class="text-xl font-semibold text-gray-900 dark:text-white">What is the pay of this task?</label>
                                     <div class="flex items-center">
-                                        <span class="text-gray-500 dark:text-gray-400">$</span>
-                                        <input type="number" id="Task_Pay" name="Task_Pay" class="form-control form-field" step="0.01" required>
                                     </div>
+                                </div>
+                                <div>
+                                    <span class="text-gray-500 dark:text-gray-400">$</span>
+                                    <input type="number" id="Task_Pay" name="Task_Pay" class="form-control form-field" cols="4" step="0.01" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="Task_Skills" class="text-xl font-semibold text-gray-900 dark:text-white">What skills are you looking for?</label>
-                                    <textarea id="Task_Skills" name="Task_Skills" class="form-control form-field" rows="4" placeholder="Enter text here..." required></textarea>
                                 </div>
+                                <textarea id="Task_Skills" name="Task_Skills" class="form-control form-field" rows="4"cols="50" placeholder="Enter text here..." required></textarea>
                             </div>
                             <!-- Modal footer -->
                             <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
                                 <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Upload</button>
-                                <button data-modal-hide="default-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Cancel</button>
+                                <button data-modal-hide="job-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Resume modal -->
+            <div id="resume-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                <div class="relative p-4 w-full max-w-2xl max-h-full">
+                    <!-- Modal content -->
+                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                        <!-- Modal header -->
+                        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                                Upload Resume
+                            </h3>
+                            <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="resume-modal">
+                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                </svg>
+                                <span class="sr-only">Cancel</span>
+                            </button>
+                        </div>
+                        <!-- Modal body -->
+                        <form method="POST" action="{{ url_for('views.upload_resume') }}">
+                            <div class="p-4 md:p-5 space-y-4">
+                                <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                                    Please fill in your details below.
+                                </p>
+                                <div class="form-group">
+                                    <label for="Resume_First_Name" class="text-xl font-semibold text-gray-900 dark:text-white">What is your first name?</label>
+                                </div>
+                                <div>
+                                    <input type="text" id="Resume_First_Name" name="Resume_First_Name" class="form-control form-field" placeholder="Enter First Name Here..." required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Resume_Last_Name" class="text-xl font-semibold text-gray-900 dark:text-white">What is your last name?</label>
+                                </div>
+                                <div>
+                                    <input type="text" id="Resume_Last_Name" name="Resume_Last_Name" class="form-control form-field" placeholder="Enter Last Name Here..." required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Resume_Description" class="text-xl font-semibold text-gray-900 dark:text-white">Write a description of yourself</label>
+                                </div>
+                                <textarea id="Resume_Description" name="Resume_Description" class="form-control form-field" rows="4" cols="50" placeholder="Enter text here..." required></textarea>
+                                <div class="form-group">
+                                    <label for="Resume_Skills" class="text-xl font-semibold text-gray-900 dark:text-white">What skills do you have?</label>
+                                </div>
+                                <textarea id="Resume_Skills" name="Resume_Skills" class="form-control form-field" rows="4"cols="50" placeholder="Enter text here..." required></textarea>
+                            </div>
+                            <!-- Modal footer -->
+                            <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+                                <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Upload</button>
+                                <button data-modal-hide="resume-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Cancel</button>
                             </div>
                         </form>
                     </div>
