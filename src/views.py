@@ -11,7 +11,7 @@ def inject_user():
     return dict(userName=current_user.first_name if current_user.is_authenticated else None)
 
 @views.route('/upload_job', methods=['POST'])
-@login_required
+# @login_required
 def upload_job():
     title = request.form.get('Task_Title')
     description = request.form.get('Task_Description')
@@ -35,7 +35,7 @@ def upload_job():
     return redirect(url_for('views.explore_jobs'))
 
 @views.route('/upload_resume', methods=['POST'])
-@login_required
+# @login_required
 def upload_resume():
     First_Name = request.form.get('Resume_First_Name')
     Last_Name = request.form.get('Resume_Last_Name')
@@ -51,14 +51,10 @@ def upload_resume():
     )
     db.session.add(new_resume)
     db.session.commit()
-
-@views.route("/")
-@login_required
-def dashboard():
-    return render_template("dashboard.html")
+    
 
 @views.route('/upload_event',methods=['POST'])
-@login_required
+# @login_required
 def upload_event():
     event_title = request.form.get('eventTitle')
     event_description = request.form.get('eventDescription')
@@ -69,13 +65,20 @@ def upload_event():
     db.session.add(new_event)
     db.session.commit()
 
+    return redirect(url_for('views.events'))
+
 @views.route('/analyze_resume',methods=['POST'])
 @login_required
 def analyze_resume():
     print("ANALYzE REUSME")
 
 
-#TODO THESE PAGES
+##Page routing
+@views.route("/")
+@login_required
+def dashboard():
+    return render_template("dashboard.html")
+
 @views.route("/events", methods=['GET','POST'])
 #@login_required
 def events():
@@ -89,18 +92,18 @@ def network():
     return render_template("network.html")
 
 @views.route('/notifications', methods=['GET'])
-#@login_required
+@login_required
 def notifications():
     return render_template("notifications.html")
 
 @views.route('/explore_jobs', methods=['GET'])
-#@login_required
+@login_required
 def explore_jobs():
     jobs = Job.query.all()
     return render_template('explore_jobs.html', jobs=jobs)
 
 @views.route('/settings', methods=['GET', 'POST'])
-#@login_required
+@login_required
 def settings():
     if request.method == 'POST':
         pass
