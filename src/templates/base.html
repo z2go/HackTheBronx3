@@ -30,7 +30,7 @@
                         <!-- Modal header -->
                         <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                             <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                                Upload Job
+                                Upload Jobs
                             </h3>
                             <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="default-modal">
                                 <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -40,12 +40,39 @@
                             </button>
                         </div>
                         <!-- Modal body -->
+                        <form method="POST">
+
                         <div class="p-4 md:p-5 space-y-4">
                             <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
                                 Please fill in the job details below.
                             </p>
                             <!-- Add form inputs here for job upload -->
+                            <p class="text-xl font-semibold text-gray-900 dark:text-white">
+                                 What is the task? 
+                            </p>
+                            <textarea class="text-base leading-relaxed text-gray-500 dark:text-gray-400" name="Task_Description" rows="4" cols="50">
+                                Enter text here...
+                            </textarea>
+                            <p class="text-xl font-semibold text-gray-900 dark:text-white"> 
+                                How long would the task take?
+                            </p>
+                            <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400" name="Task_Time">
+                                <input type="number"> hours <input type="number"> minutes?
+                            </p>
+                            <p class="text-xl font-semibold text-gray-900 dark:text-white"> 
+                                What is the pay of this task?
+                            </p>
+                            <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400" name="Task_Pay">
+                                $<input type="number">
+                            </p>
+                            <p class="text-xl font-semibold text-gray-900 dark:text-white" name="Task_Skill"> 
+                                What skills are you looking for?
+                            </p>
+                            <textarea class="text-base leading-relaxed text-gray-500 dark:text-gray-400" name="Task" rows="4" cols="50">
+                                Enter text here...
+                            </textarea>
                         </div>
+                    </form>
                         <!-- Modal footer -->
                         <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
                             <button data-modal-hide="default-modal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Upload</button>

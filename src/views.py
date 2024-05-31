@@ -1,5 +1,7 @@
 from flask import Blueprint, render_template, request
 from flask_login import login_required, current_user
+from .models import Event
+from . import db
 
 views = Blueprint('views', __name__)
 
@@ -15,9 +17,23 @@ def dashboard():
     return render_template("dashboard.html")
 
 #TODO THESE PAGES
-@views.route("/events")
+@views.route("/events", methods=['GET','POST'])
 #@login_required
 def events():
+    if request.method == 'POST':
+        event_title = request.form.get('eventTitle')
+        event_description = request.form.get('eventDescription')
+
+        new_event = Event(event_title,event_description)
+        db.session.add(new_event)
+        db.session.commit(new_event)
+
+    if request.method == 'GET':
+        events = Event.query().all()
+
+        
+        
+
     return render_template("events.html")
 
 @views.route('/network', methods=['GET'])

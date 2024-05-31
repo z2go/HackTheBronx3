@@ -16,7 +16,7 @@ def login():
 
         print(user_name)
         print(email)
-
+        
         userName = User.query.filter_by(first_name=user_name).first()
 
         if userName:
