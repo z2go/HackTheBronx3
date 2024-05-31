@@ -3,7 +3,7 @@
 {% block content %}
 <div class="p-4">
     <h2 class="text-2xl font-bold mb-4">Explore Jobs</h2>
-    <form method="POST" action="url_for">
+    <form method="POST" action="{{ url_for('analyze_resume')}}">
         <button class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" type="button" action>
             Find job matches
         </button>

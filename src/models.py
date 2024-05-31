@@ -34,11 +34,29 @@ class Event(db.Model):
     title = db.Column(db.String(200))
     description = db.Column(db.String(5000))
     creator = db.Column(db.String(150), default=current_user)
-    date = db.Column(db.DateTime(timezone=True), default=func.now())
+    date_created = db.Column(db.DateTime(timezone=True), default=func.now())
+    date_happening = db.Integer()
     
-    def __init__(self, title, description):
+    def __init__(self, title, description, creator, date_happening):
         self.title = title
         self.description = description
+        self.creator = creator
+        self.date_happening = date_happening
+
+class Resume(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    First_Name = db.Column(db.String)
+    Last_Name = db.Column(db.String)
+    Resume_Description = db.Column(db.String)
+    Resume_Skills = db.Column(db.String)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    
+    def __init__(self, First_Name, Last_Name, Resume_Description, Resume_Skills):
+        self.First_Name = First_Name
+        self.Last_Name = Last_Name
+        self.Resume_Description = Resume_Description
+        self.Resume_Skills = Resume_Skills
+
         
 
 class User(db.Model, UserMixin):

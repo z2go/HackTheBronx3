@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from flask_login import login_required, current_user
-from .models import Event, Job
+from .models import Event, Job, Resume
 from . import db
 
 views = Blueprint('views', __name__)
@@ -37,8 +37,20 @@ def upload_job():
 @views.route('/upload_resume', methods=['POST'])
 @login_required
 def upload_resume():
-    pass
+    First_Name = request.form.get('Resume_First_Name')
+    Last_Name = request.form.get('Resume_Last_Name')
+    Resume_Description = request.form.get('Resume_Description')
+    Resume_Skills = request.form.get('Resume_Skills')
     ##TODO
+    new_resume = Resume(
+        First_Name=First_Name,
+        Last_Name=Last_Name,
+        Resume_Description=Resume_Description, 
+        Resume_Skills=Resume_Skills, 
+        user_id=current_user.id
+    )
+    db.session.add(new_resume)
+    db.session.commit()
 
 @views.route("/")
 @login_required
@@ -50,22 +62,26 @@ def dashboard():
 def upload_event():
     event_title = request.form.get('eventTitle')
     event_description = request.form.get('eventDescription')
+    event_creator = request.form.get('eventCreator')
+    event_date = request.form.get('eventDate')
 
-    new_event = Event(event_title,event_description)
+    new_event = Event(event_title,event_description, event_creator, event_date)
     db.session.add(new_event)
     db.session.commit()
+
+@views.route('/analyze_resume',methods=['POST'])
+@login_required
+def analyze_resume():
+    print("ANALYzE REUSME")
+
 
 #TODO THESE PAGES
 @views.route("/events", methods=['GET','POST'])
 #@login_required
 def events():
-    if request.method == 'GET':
-        events = Event.query.all()
+    events = Event.query.all()
 
-        
-        
-
-    return render_template("events.html")
+    return render_template("events.html", events = events)
 
 @views.route('/network', methods=['GET'])
 @login_required
