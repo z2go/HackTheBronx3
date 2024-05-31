@@ -75,7 +75,7 @@ def analyze_resume():
 
 ##Page routing
 @views.route("/")
-@login_required
+# @login_required
 def dashboard():
     return render_template("dashboard.html")
 
