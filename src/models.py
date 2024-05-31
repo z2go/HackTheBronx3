@@ -11,8 +11,19 @@ class Message(db.Model):
 
 class Job(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    task_description = db.Column(db.String(10000))
-    date = db.Column(db.DateTime(timezone=True), default=func.now())
+    title = db.Column(db.String(200), nullable=False)
+    description = db.Column(db.String(5000), nullable=False)
+    company = db.Column(db.String(150), nullable=False)
+    location = db.Column(db.String(150), nullable=False)
+    posted_date = db.Column(db.DateTime(timezone=True), default=func.now())
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+
+    def __init__(self, title, description, company, location):
+        self.title = title
+        self.description = description
+        self.company = company
+        self.location = location
+        self.user_id = current_user.id
 
 class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)

@@ -29,7 +29,7 @@
                 </div>
                 <!-- Modal body -->
                 <div class="p-4 md:p-5 space-y-4">
-                    <form method="POST">
+                    <form method="POST", action="{{ url_for('views.upload_event') }}">
                         <div class="form-group has-icon fa-user mb-4">
                             <label class="movable" for="eventTitle">Event Title</label>
                             <input type="text" class="form-control form-field" id="eventTitle" name="eventTitle" />

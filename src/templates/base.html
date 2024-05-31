@@ -40,7 +40,7 @@
                             </button>
                         </div>
                         <!-- Modal body -->
-                        <form method="POST">
+                        <form method="POST" action="{{ url_for('views.upload_job') }}">
 
                         <div class="p-4 md:p-5 space-y-4">
                             <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
@@ -48,7 +48,13 @@
                             </p>
                             <!-- Add form inputs here for job upload -->
                             <p class="text-xl font-semibold text-gray-900 dark:text-white">
-                                 What is the task? 
+                                What is the name of the task?
+                            </p>
+                            <p class="text-xl font-semibold text-gray-900 dark:text-white" name="Task_Title">
+                                <input type="text"> 
+                            </p>
+                            <p class="text-xl font-semibold text-gray-900 dark:text-white">
+                                 What is the description of the task? 
                             </p>
                             <textarea class="text-base leading-relaxed text-gray-500 dark:text-gray-400" name="Task_Description" rows="4" cols="50">
                                 Enter text here...
@@ -65,10 +71,10 @@
                             <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400" name="Task_Pay">
                                 $<input type="number">
                             </p>
-                            <p class="text-xl font-semibold text-gray-900 dark:text-white" name="Task_Skill"> 
+                            <p class="text-xl font-semibold text-gray-900 dark:text-white"> 
                                 What skills are you looking for?
                             </p>
-                            <textarea class="text-base leading-relaxed text-gray-500 dark:text-gray-400" name="Task" rows="4" cols="50">
+                            <textarea class="text-base leading-relaxed text-gray-500 dark:text-gray-400" name="Task_Skills" rows="4" cols="50">
                                 Enter text here...
                             </textarea>
                         </div>

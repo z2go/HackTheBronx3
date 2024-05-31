@@ -7,6 +7,7 @@ import uuid
 #Creating and managing database
 
 db = SQLAlchemy()
+
 DB_NAME = "database.db"
     
 #Message functionality (not implemented only if needed)
