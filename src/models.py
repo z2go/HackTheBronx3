@@ -13,17 +13,21 @@ class Job(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200), nullable=False)
     description = db.Column(db.String(5000), nullable=False)
-    company = db.Column(db.String(150), nullable=False)
-    location = db.Column(db.String(150), nullable=False)
+    time_hours = db.Column(db.Integer, nullable=False)
+    time_minutes = db.Column(db.Integer, nullable=False)
+    pay = db.Column(db.Float, nullable=False)
+    skills = db.Column(db.String(2000), nullable=False)
     posted_date = db.Column(db.DateTime(timezone=True), default=func.now())
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
 
-    def __init__(self, title, description, company, location):
+    def __init__(self, title, description, time_hours, time_minutes, pay, skills, user_id):
         self.title = title
         self.description = description
-        self.company = company
-        self.location = location
-        self.user_id = current_user.id
+        self.time_hours = time_hours
+        self.time_minutes = time_minutes
+        self.pay = pay
+        self.skills = skills
+        self.user_id = user_id
 
 class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)

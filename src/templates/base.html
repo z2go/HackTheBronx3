@@ -16,7 +16,7 @@
         <p class="bluetext"><span class="font-bold fancy">Bronx-Inn</span></p>
         <div class="relative flex items-center space-x-4">
             <button class="focus:outline-none focus:ring" onclick="document.getElementById('userMenuDropdown').classList.toggle('hidden');">
-              <i class="fas fa-user-circle text-3xl"></i>
+                <i class="fas fa-user-circle text-3xl"></i>
             </button>
             <!-- Modal toggle -->
             <button data-modal-target="default-modal" data-modal-toggle="default-modal" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" type="button">
@@ -41,49 +41,43 @@
                         </div>
                         <!-- Modal body -->
                         <form method="POST" action="{{ url_for('views.upload_job') }}">
-
-                        <div class="p-4 md:p-5 space-y-4">
-                            <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                                Please fill in the job details below.
-                            </p>
-                            <!-- Add form inputs here for job upload -->
-                            <p class="text-xl font-semibold text-gray-900 dark:text-white">
-                                What is the name of the task?
-                            </p>
-                            <p class="text-xl font-semibold text-gray-900 dark:text-white" name="Task_Title">
-                                <input type="text"> 
-                            </p>
-                            <p class="text-xl font-semibold text-gray-900 dark:text-white">
-                                 What is the description of the task? 
-                            </p>
-                            <textarea class="text-base leading-relaxed text-gray-500 dark:text-gray-400" name="Task_Description" rows="4" cols="50">
-                                Enter text here...
-                            </textarea>
-                            <p class="text-xl font-semibold text-gray-900 dark:text-white"> 
-                                How long would the task take?
-                            </p>
-                            <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400" name="Task_Time">
-                                <input type="number"> hours <input type="number"> minutes?
-                            </p>
-                            <p class="text-xl font-semibold text-gray-900 dark:text-white"> 
-                                What is the pay of this task?
-                            </p>
-                            <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400" name="Task_Pay">
-                                $<input type="number">
-                            </p>
-                            <p class="text-xl font-semibold text-gray-900 dark:text-white"> 
-                                What skills are you looking for?
-                            </p>
-                            <textarea class="text-base leading-relaxed text-gray-500 dark:text-gray-400" name="Task_Skills" rows="4" cols="50">
-                                Enter text here...
-                            </textarea>
-                        </div>
-                    </form>
-                        <!-- Modal footer -->
-                        <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-                            <button data-modal-hide="default-modal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Upload</button>
-                            <button data-modal-hide="default-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Cancel</button>
-                        </div>
+                            <div class="p-4 md:p-5 space-y-4">
+                                <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                                    Please fill in the job details below.
+                                </p>
+                                <div class="form-group">
+                                    <label for="Task_Title" class="text-xl font-semibold text-gray-900 dark:text-white">What is the name of the task?</label>
+                                    <input type="text" id="Task_Title" name="Task_Title" class="form-control form-field" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Task_Description" class="text-xl font-semibold text-gray-900 dark:text-white">What is the description of the task?</label>
+                                    <textarea id="Task_Description" name="Task_Description" class="form-control form-field" rows="4" required>Enter text here...</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Task_Time_Hours" class="text-xl font-semibold text-gray-900 dark:text-white">How long would the task take?</label>
+                                    <div class="flex space-x-2">
+                                        <input type="number" id="Task_Time_Hours" name="Task_Time_Hours" class="form-control form-field" min="0" placeholder="Hours" required> hours
+                                        <input type="number" id="Task_Time_Minutes" name="Task_Time_Minutes" class="form-control form-field" min="0" max="59" placeholder="Minutes" required> minutes
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Task_Pay" class="text-xl font-semibold text-gray-900 dark:text-white">What is the pay of this task?</label>
+                                    <div class="flex items-center">
+                                        <span class="text-gray-500 dark:text-gray-400">$</span>
+                                        <input type="number" id="Task_Pay" name="Task_Pay" class="form-control form-field" step="0.01" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Task_Skills" class="text-xl font-semibold text-gray-900 dark:text-white">What skills are you looking for?</label>
+                                    <textarea id="Task_Skills" name="Task_Skills" class="form-control form-field" rows="4" required>Enter text here...</textarea>
+                                </div>
+                            </div>
+                            <!-- Modal footer -->
+                            <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+                                <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Upload</button>
+                                <button data-modal-hide="default-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Cancel</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
