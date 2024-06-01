@@ -5,8 +5,8 @@
 <div class="grid grid-cols-3 gap-4">
     {% for friend in friends %}
     <div class="bg-white p-4 rounded-lg shadow-md">
-        <h3 class="text-xl font-semibold mb-2">{{ friend.name }}</h3>
+        <h3 class="text-xl font-semibold mb-2">{{ friend.first_name }}</h3>
     </div>
-    {% endblock %}
+    {% endfor %}
 </div>
 {% endblock %}

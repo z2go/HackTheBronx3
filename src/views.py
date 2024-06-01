@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from flask_login import login_required, current_user
-from .models import Event, Job, Resume
+from .models import Event, Job, Resume, User
 from . import db
 
 views = Blueprint('views', __name__)
@@ -89,7 +89,7 @@ def events():
 @views.route('/network', methods=['GET'])
 @login_required
 def network():
-    return render_template("network.html", friends=current_user.friends)
+    return render_template("network.html", friends=[User("Sample Email", "Test User", "Rizzity Skibidi")])
 
 @views.route('/notifications', methods=['GET'])
 @login_required
