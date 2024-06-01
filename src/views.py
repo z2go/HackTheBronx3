@@ -60,33 +60,32 @@ def upload_resume():
 def upload_event():
     event_title = request.form.get('eventTitle')
     event_description = request.form.get('eventDescription')
-    event_creator = request.form.get('eventCreator')
+    event_creator = current_user.first_name
     event_date = request.form.get('eventDate')
 
     new_event = Event(event_title,event_description, event_creator, event_date)
     db.session.add(new_event)
     db.session.commit()
-
     return redirect(url_for('views.events'))
 
 @views.route('/analyze_resume',methods=['POST'])
 @login_required
 def analyze_resume():
-    print("ANALYzE REUSME")
+    print("ANALYZE REUSME")
 
 
 ##Page routing
 @views.route("/")
-# @login_required
+@login_required
 def dashboard():
     return render_template("dashboard.html")
 
 @views.route("/events", methods=['GET','POST'])
-#@login_required
+@login_required
 def events():
     events = Event.query.all()
 
-    return render_template("events.html", events = events)
+    return render_template("events.html", events = events, current_user=current_user)
 
 @views.route('/network', methods=['GET'])
 @login_required
@@ -117,3 +116,14 @@ def settings():
     if request.method == 'POST':
         pass
     return render_template("settings.html")
+
+@views.route('/remove_event', methods=['GET', 'POST'])
+@login_required
+def remove_event():
+    if request.method == 'POST':
+        id = request.form['button']
+
+    event = Event.query.get(id)
+    db.session.delete(event)
+    db.session.commit()
+    return redirect(url_for(views.events))
