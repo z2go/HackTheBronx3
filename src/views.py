@@ -102,6 +102,12 @@ def explore_jobs():
     jobs = Job.query.all()
     return render_template('explore_jobs.html', jobs=jobs)
 
+@views.route('/explore_resumes', methods=['GET'])
+@login_required
+def explore_resumes():
+    resumes = Resume.query.all()
+    return render_template('explore_resumes.html', resumes=resumes)
+
 @views.route('/settings', methods=['GET', 'POST'])
 @login_required
 def settings():
