@@ -51,11 +51,12 @@ class Resume(db.Model):
     Resume_Skills = db.Column(db.String)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     
-    def __init__(self, First_Name, Last_Name, Resume_Description, Resume_Skills):
+    def __init__(self, First_Name, Last_Name, Resume_Description, Resume_Skills, user_id):
         self.First_Name = First_Name
         self.Last_Name = Last_Name
         self.Resume_Description = Resume_Description
         self.Resume_Skills = Resume_Skills
+        self.user_id = user_id
 
         
 

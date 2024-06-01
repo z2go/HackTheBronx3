@@ -51,6 +51,8 @@ def upload_resume():
     )
     db.session.add(new_resume)
     db.session.commit()
+
+    return redirect(url_for('views.explore_resumes'))
     
 
 @views.route('/upload_event',methods=['POST'])
@@ -106,6 +108,7 @@ def explore_jobs():
 @login_required
 def explore_resumes():
     resumes = Resume.query.all()
+    print(resumes[0])
     return render_template('explore_resumes.html', resumes=resumes)
 
 @views.route('/settings', methods=['GET', 'POST'])
