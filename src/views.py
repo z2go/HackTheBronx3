@@ -54,7 +54,6 @@ def upload_resume():
 
     return redirect(url_for('views.explore_resumes'))
     
-
 @views.route('/upload_event',methods=['POST'])
 # @login_required
 def upload_event():
@@ -72,7 +71,6 @@ def upload_event():
 @login_required
 def analyze_resume():
     print("ANALYZE REUSME")
-
 
 ##Page routing
 @views.route("/")
@@ -120,10 +118,23 @@ def settings():
 @views.route('/remove_event', methods=['GET', 'POST'])
 @login_required
 def remove_event():
-    if request.method == 'POST':
-        id = request.form['button']
 
+    id = request.form.get("submit",__name__)
+
+    print(id)
     event = Event.query.get(id)
     db.session.delete(event)
     db.session.commit()
     return redirect(url_for(views.events))
+
+@views.route('/my_events',methods=['GET','POST'])
+@login_required
+def my_events():
+    events = Event.query.all()
+
+    return render_template("my_events.html", events = events, current_user=current_user)
+
+views.route("/remove_job",methods=['GET','POST'])
+@login_required
+def remove_job():
+    return render_template('remove_job.html')

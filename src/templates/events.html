@@ -4,7 +4,9 @@
 
 <body>
     <span class="shadowtext">Events</span><br>
-   
+    <a href="{{ url_for('views.my_events') }}">
+        <button class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">My Events</button>
+     </a>
     <div class="grid grid-cols-1 gap-4">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {% for event in events %}
@@ -16,8 +18,11 @@
                 <p class="text-gray-500 text-sm">Created on {{ event.date_created.strftime('%Y-%m-%d') }}</p>
 
                 {% if event.creator == current_user.first_name %}
-                <button id="{{ event.id }}" method="POST" action="{{ url_for('views.remove_event') }}" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" type="button" href="/remove_event" method="'POST">
-                    Cancel Event
+                <button type="submit" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" name="{{ event.title }}">Cancel {{ event.title }}</button>
+                
+                {% elif event.creator != current_user.first_name %}
+                <button id="{{ event.id }}" action="{{ url_for('views.remove_event') }}" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" type="button" href="/remove_event" method="'POST">
+                    Participate
                 </button>
                 {% endif %}
             </div>

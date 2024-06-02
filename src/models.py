@@ -56,9 +56,7 @@ class Resume(db.Model):
         self.Last_Name = Last_Name
         self.Resume_Description = Resume_Description
         self.Resume_Skills = Resume_Skills
-        self.user_id = user_id
-
-        
+        self.user_id = user_id        
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
