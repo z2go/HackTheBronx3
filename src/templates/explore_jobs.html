@@ -15,8 +15,10 @@
             <p class="text-gray-700 mb-2">{{ job.description }}</p>
             <p class="text-gray-700 mb-2"><strong>Time:</strong> {{ job.time_hours }} hours {{ job.time_minutes }} minutes</p>
             <p class="text-gray-700 mb-2"><strong>Pay:</strong> ${{ job.pay }}</p>
-            <p class="text-gray-700 mb-2"><strong>Skills:</strong> {{ job.skills }}</p>
+            <p class="text-gray-700 mb-2"><strong>Needed Skills:</strong> {{ job.skills }}</p>
             <p class="text-gray-500 text-sm">Posted on {{ job.posted_date.strftime('%Y-%m-%d') }}</p>
+            <!-- Make so it connects to the messaging system with the person who created the job -->
+            <a href="{{ url_for('views.network') }}" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Apply</a> 
         </div>
         {% endfor %}
     </div>
