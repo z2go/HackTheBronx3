@@ -20,14 +20,13 @@ class Job(db.Model):
     posted_date = db.Column(db.DateTime(timezone=True), default=func.now())
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
 
-    def __init__(self, title, description, time_hours, time_minutes, pay, skills, user_id):
+    def __init__(self, title, description, time_hours, time_minutes, pay, skills):
         self.title = title
         self.description = description
         self.time_hours = time_hours
         self.time_minutes = time_minutes
         self.pay = pay
         self.skills = skills
-        self.user_id = user_id
 
 class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -51,26 +50,28 @@ class Resume(db.Model):
     Resume_Skills = db.Column(db.String)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     
-    def __init__(self, First_Name, Last_Name, Resume_Description, Resume_Skills, user_id):
+    def __init__(self, First_Name, Last_Name, Resume_Description, Resume_Skills):
         self.First_Name = First_Name
         self.Last_Name = Last_Name
         self.Resume_Description = Resume_Description
         self.Resume_Skills = Resume_Skills
-        self.user_id = user_id        
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(150), unique=True)
     password = db.Column(db.String(150))
     first_name = db.Column(db.String(150))
-    about_me = db.Column(db.String(20000), default="")
+    interests = db.Column(db.String(1000))  
+    location = db.Column(db.String(250))    
+    about_me = db.Column(db.String(1000))   
 
-    
-    
     messages = db.relationship("Message")
+    jobs = db.relationship("Job")
 
-    def __init__(self, email, first_name, password):
+    def __init__(self, email, first_name, password, interests="", location="", about_me=""):
         self.email = email
         self.password = password
         self.first_name = first_name
-        self.about_me = "I like cheese"
+        self.interests = interests
+        self.location = location
+        self.about_me = about_me

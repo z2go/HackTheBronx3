@@ -8,7 +8,21 @@ views = Blueprint('views', __name__)
 #So that all html files can access the username if logged in
 @views.context_processor
 def inject_user():
-    return dict(userName=current_user.first_name if current_user.is_authenticated else None)
+    return dict(user=current_user if current_user.is_authenticated else None)
+
+@views.route('/complete_account', methods=['POST'])
+@login_required
+def complete_account():
+    interests = request.form.get('interests')
+    location = request.form.get('location')
+    about_me = request.form.get('about_me')
+
+    current_user.interests = interests
+    current_user.location = location
+    current_user.about_me = about_me
+    db.session.commit()
+
+    return redirect(url_for('views.dashboard'))
 
 @views.route('/upload_job', methods=['POST'])
 # @login_required
@@ -105,15 +119,24 @@ def explore_jobs():
 @login_required
 def explore_resumes():
     resumes = Resume.query.all()
-    print(resumes[0])
+    # print(resumes[0])
     return render_template('explore_resumes.html', resumes=resumes)
 
-@views.route('/settings', methods=['GET', 'POST'])
+@views.route('/profile/<int:user_id>', methods=['GET', 'POST'])
 @login_required
-def settings():
-    if request.method == 'POST':
-        pass
-    return render_template("settings.html")
+def profile(user_id):
+    user = User.query.get_or_404(user_id)
+    is_current_user = (user.id == current_user.id)
+
+    if request.method == 'POST' and is_current_user:
+        user.first_name = request.form.get('first_name')
+        user.location = request.form.get('location')
+        user.interests = request.form.get('interests')
+        user.about_me = request.form.get('about_me')
+        db.session.commit()
+        return redirect(url_for('views.profile', user_id=user.id))
+
+    return render_template('profile.html', user=user, is_current_user=is_current_user)
 
 @views.route('/remove_event', methods=['GET', 'POST'])
 @login_required

@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block title %}BronxInn{% endblock %}
+{% block content %}
+<span class="text-2xl font-bold mb-4">Profile</span><br>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div class="col-span-2">
+        <form method="POST" id="profile-form" data-is-current-user="{{ 'true' if is_current_user else 'false' }}">
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="first_name">Name</label>
+                {% if is_current_user %}
+                    <input type="text" id="first_name" name="first_name" class="form-control form-field w-full px-3 py-2 border rounded-md" value="{{ user.first_name }}" required>
+                {% else %}
+                    <p class="form-control form-field w-full px-3 py-2 border rounded-md">{{ user.first_name }}</p>
+                {% endif %}
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="location">Location</label>
+                <div id="profile-map" style="height: 400px;" class="mb-2"></div>
+                <input type="hidden" id="location" name="location" value="{{ user.location }}">
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="interests">Interests</label>
+                {% if is_current_user %}
+                    <input type="text" id="interests" name="interests" class="form-control form-field w-full px-3 py-2 border rounded-md" value="{{ user.interests }}" required>
+                {% else %}
+                    <div id="interests-display" class="form-control form-field w-full px-3 py-2 border rounded-md">{{ user.interests }}</div>
+                {% endif %}
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="about_me">About Me</label>
+                {% if is_current_user %}
+                    <textarea id="about_me" name="about_me" class="form-control form-field w-full px-3 py-2 border rounded-md" rows="4" required>{{ user.about_me }}</textarea>
+                {% else %}
+                    <p class="form-control form-field w-full px-3 py-2 border rounded-md">{{ user.about_me }}</p>
+                {% endif %}
+            </div>
+            {% if is_current_user %}
+                <div class="mb-4">
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Save Changes</button>
+                </div>
+            {% endif %}
+        </form>
+        {% if is_current_user %}
+        <a href="{{ url_for('auth.logout') }}" class="block px-4 py-2 text-sm text-white bg-red-500 hover:bg-red-700 font-bold rounded text-center mt-4">
+            Logout
+        </a>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const isCurrentUser = document.getElementById('profile-form').dataset.isCurrentUser === 'true';
+
+        function initMap() {
+            const locationString = "{{ user.location }}";
+            const [lat, lng] = locationString.split(',').map(Number);
+            const map = new google.maps.Map(document.getElementById('profile-map'), {
+                center: { lat, lng },
+                zoom: 12,
+            });
+
+            const marker = new google.maps.Marker({
+                map: map,
+                draggable: isCurrentUser,
+                position: { lat, lng },
+            });
+
+            if (isCurrentUser) {
+                marker.addListener('dragend', function () {
+                    const lat = marker.getPosition().lat();
+                    const lng = marker.getPosition().lng();
+                    document.getElementById('location').value = lat + ',' + lng;
+                });
+            }
+        }
+        if (typeof google !== 'undefined' && google.maps) {
+            google.maps.event.addDomListener(window, 'load', initMap);
+        }
+
+        var input = document.querySelector('input[name=interests]');
+        if (input) {
+            new Tagify(input, {
+                delimiters: ", ", 
+                pattern: /^[\w\s]+$/, 
+            });
+        }
+
+        var interestsDisplay = document.getElementById('interests-display');
+        if (interestsDisplay) {
+            var tagify = new Tagify(interestsDisplay, { readOnly: true });
+            tagify.addTags(JSON.parse('{{ user.interests|tojson|safe }}'.slice(1, -1)));
+        }
+    });
+</script>
+{% endblock %}
