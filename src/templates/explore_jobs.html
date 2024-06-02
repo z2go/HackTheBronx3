@@ -13,7 +13,7 @@
             <p class="text-gray-700 mb-2">{{ job.description }}</p>
             <p class="text-gray-700 mb-2"><strong>Time:</strong> {{ job.time_hours }} hours {{ job.time_minutes }} minutes</p>
             <p class="text-gray-700 mb-2"><strong>Pay:</strong> ${{ job.pay }}</p>
-            <p class="text-gray-700 mb-2"><strong>Skills:</strong> {{ job.skills }}</p>
+            <p class="text-gray-700 mb-2"><strong>Needed Skills:</strong> {{ job.skills }}</p>
             <p class="text-gray-500 text-sm">Posted on {{ job.posted_date.strftime('%Y-%m-%d') }}</p>
 
             {% if job.creator == current_user.first_name %}
