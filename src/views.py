@@ -1,9 +1,13 @@
-from flask import Blueprint, render_template, request, redirect, url_for, jsonify
+from flask import Blueprint, render_template, request, redirect, url_for, jsonify, session, Flask
 from flask_login import login_required, current_user
 from .models import Event, Job, Resume, User
 from . import db
+from flask_socketio import join_room, leave_room, send, SocketIO
+import random
+from string import ascii_uppercase
 
-import openai
+
+#import openai
 import os
 import json
 
@@ -128,7 +132,41 @@ def events():
 @views.route('/network', methods=['GET'])
 @login_required
 def network():
-    return render_template("network.html", friends = db.session.query(User.username).all())
+    return render_template("network.html", friends = db.session.query(User).all())
+
+@views.route('/chat', methods=['GET','POST'])
+@login_required
+def chat():
+    session.clear()
+    room = create_new_code(4)
+    rooms[room] = {'messages':[]}
+    session["room"] = room
+    session["name"] = current_user.username
+    return render_template("chat.html")
+
+rooms = {}
+def create_new_code(length):
+    while True:
+        code = ""
+        for _ in range(length):
+            code += random.choice(ascii_uppercase)
+        if code not in rooms:
+            break
+        
+@socketio.on("message")
+def message(data):
+    room = session.get("room")
+    if room not in rooms:
+        return 
+    
+    content = {
+        "name": session.get("name"),
+        "message": data["data"]
+    }
+    send(content, to=room)
+    rooms[room]["messages"].append(content)
+    print(f"{session.get('name')} said: {data['data']}")
+
 
 @views.route('/notifications', methods=['GET'])
 @login_required
