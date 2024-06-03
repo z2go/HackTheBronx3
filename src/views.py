@@ -3,7 +3,7 @@ from flask_login import login_required, current_user
 from .models import Event, Job, Resume, User
 from . import db
 
-# import openai
+import openai
 import os
 
 views = Blueprint('views', __name__)
@@ -148,19 +148,23 @@ def find_job_matches():
     user = User.query.get(user_id)
     jobs = Job.query.all()
 
-    openai.api_key = os.getenv('OPENAI-GPT-KEY')
+    client = openai.OpenAI(api_key=os.getenv('OPENAI_GPT_KEY'))
 
+    conversation = {}
     prompt = f"User information:\nName: {user.first_name}\nInterests: {user.interests}\nLocation: {user.location}\n\nJobs available:\n"
     for job in jobs:
         prompt += f"Title: {job.title}\nDescription: {job.description}\nTime: {job.time_hours} hours {job.time_minutes} minutes\nPay: ${job.pay}\nSkills: {job.skills}\nEligibility: {job.eligibility_min} - {job.eligibility_max} years\nLocation: {job.location}\n\n"
+    conversation.append({'role': 'system', 'content': prompt})
+    conversation.append({'role': 'system', 'content': "\nPlease rank these jobs for the user based on their suitability."})
 
-    response = openai.Completion.create(
+    response = client.chat.completions.create(
         model="gpt-4-turbo-preview",
-        prompt=prompt + "\nPlease rank these jobs for the user based on their suitability.",
+        messages=conversation,
+        temperature=0,
         max_tokens=500
     )
 
-    ranked_jobs = response.choices[0].text.strip().split('\n')
+    ranked_jobs = response.choices[0].message.content.strip().split('\n')
 
     return jsonify({"ranked_jobs": ranked_jobs})
 
@@ -170,6 +174,9 @@ def explore_resumes():
     resumes = Resume.query.all()
     # print(resumes[0])
     return render_template('explore_resumes.html', resumes=resumes)
+
+def list_of_maps_to_string(list_of_maps):
+    return list_of_maps
 
 @views.route('/profile/<username>', methods=['GET', 'POST'])
 @login_required
@@ -185,7 +192,7 @@ def profile(username):
         db.session.commit()
         return redirect(url_for('views.profile', username=user.username))
 
-    return render_template('profile.html', user=user, is_current_user=is_current_user)
+    return render_template('profile.html', user=user, is_current_user=is_current_user, user_interests = list_of_maps_to_string(user.interests))
 
 @views.route('/my_events',methods=['GET','POST'])
 @login_required

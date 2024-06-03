@@ -7,7 +7,7 @@
         <button class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">My Jobs</button>
     </a>
 
-    <button id="find-job-matches" class="block text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-4">Find Job Matches</button>
+    <button id="find-job-matches" class="block text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-4" action="{{ url_for('views.find_job_matches') }}">Find Job Matches</button>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {% for job in jobs %}
         <div class="bg-white p-4 rounded-lg shadow-md">
@@ -22,14 +22,13 @@
 
 
             {% if job.creator == current_user.username %}
-            <a href="{{ url_for('views.remove_job', job_id=job.id) }}">
-                <button class="block text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-2">Delete Job</button>
-            </a>
-            {% elif job.creator != current_user.username %}
+                <a href="{{ url_for('views.remove_job', job_id=job.id) }}">
+                    <button class="block text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-2">Delete Job</button>
+                </a>
+            {% endif %}
             <a href="{{ url_for('views.view_job', job_id=job.id) }}">
                 <button class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-2">View More</button>
             </a>
-            {% endif %}
         </div>
         {% endfor %}
     </div>

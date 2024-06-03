@@ -21,9 +21,9 @@
             <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="interests">Interests</label>
                 {% if is_current_user %}
-                    <input type="text" id="interests" name="interests" class="form-control form-field w-full px-3 py-2 border rounded-md" value="{{ user.interests }}" required>
+                    <input type="text" id="interests" name="interests" class="form-control form-field w-full px-3 py-2 border rounded-md" value="{{ user_interests }}" required>
                 {% else %}
-                    <div id="interests-display" class="form-control form-field w-full px-3 py-2 border rounded-md">{{ user.interests }}</div>
+                    <div id="interests-display" class="form-control form-field w-full px-3 py-2 border rounded-md">{{ user_interests }}</div>
                 {% endif %}
             </div>
             <div class="mb-4">
