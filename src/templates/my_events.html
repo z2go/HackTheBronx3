@@ -22,9 +22,9 @@
                 <p class="text-gray-500 text-sm">Created on {{ event.date_created.strftime('%Y-%m-%d') }}</p>
 
                 
-                <button id="{{ event.id }}" method="POST" action="{{ url_for('views.remove_event') }}" class="block text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" type="button" href="/remove_event" method="'POST">
-                    Cancel Event
-                </button>
+                <a href="{{ url_for('views.remove_event', event_id=event.id) }}">
+                    <button class="block text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-2">Delete Event</button>
+                </a>
                 
             </div>
             {% endif %}

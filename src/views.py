@@ -183,18 +183,6 @@ def profile(username):
 
     return render_template('profile.html', user=user, is_current_user=is_current_user)
 
-@views.route('/remove_event', methods=['GET', 'POST'])
-@login_required
-def remove_event():
-
-    id = request.form.get("submit",__name__)
-
-    print(id)
-    event = Event.query.get(id)
-    db.session.delete(event)
-    db.session.commit()
-    return redirect(url_for(views.events))
-
 @views.route('/my_events',methods=['GET','POST'])
 @login_required
 def my_events():
@@ -202,7 +190,19 @@ def my_events():
 
     return render_template("my_events.html", events = events, current_user=current_user)
 
-views.route("/remove_job",methods=['GET','POST'])
-@login_required
-def remove_job():
-    return render_template('remove_job.html')
+@views.route('/remove_job/<int:job_id>', methods=['GET'])
+def remove_job(job_id):
+    job = Job.query.get_or_404(job_id)
+    db.session.delete(job)
+    db.session.commit()
+    return render_template('view_job.html', job=job)
+
+@views.route('/remove_event/<int:event_id>', methods=['GET','POST'])
+def remove_event(event_id):
+    event = Event.query.get_or_404(event_id)
+    
+    db.session.delete(event)
+    db.session.commit()
+
+    events = Event.query.all()
+    return redirect(url_for('views.events'))

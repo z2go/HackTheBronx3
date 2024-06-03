@@ -1,11 +1,13 @@
 {% extends "base.html" %}
-{% block title %}BronxInn{% endblock %}
+{% block title %}Network{% endblock %}
 {% block content %}
-<span class="shadowtext">Friends</span><br>
+<span class="shadowtext">Network</span><br>
 <div class="grid grid-cols-3 gap-4">
     {% for friend in friends %}
     <div class="bg-white p-4 rounded-lg shadow-md">
         <h3 class="text-xl font-semibold mb-2">{{ friend.username }}</h3>
+        <p class="text-xl font-semibold mb-2">{{ friend.about_me }}</p>
+    
     </div>
     {% endfor %}
 </div>
