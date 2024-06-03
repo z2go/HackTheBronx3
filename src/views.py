@@ -5,6 +5,7 @@ from . import db
 
 import openai
 import os
+import json
 
 views = Blueprint('views', __name__)
 
@@ -175,8 +176,13 @@ def explore_resumes():
     # print(resumes[0])
     return render_template('explore_resumes.html', resumes=resumes)
 
-def list_of_maps_to_string(list_of_maps):
-    return list_of_maps
+def convert_interests_to_readable(interests):
+    list_of_maps = json.loads(interests)
+    return ", ".join([item['value'] for item in list_of_maps])
+
+def convert_readable_to_interests(readable_interests):
+    list_of_maps = [{"value": item.strip()} for item in readable_interests.split(',')]
+    return json.dumps(list_of_maps)
 
 @views.route('/profile/<username>', methods=['GET', 'POST'])
 @login_required
@@ -187,12 +193,12 @@ def profile(username):
     if request.method == 'POST' and is_current_user:
         user.username = request.form.get('first_name')
         user.location = request.form.get('location')
-        user.interests = request.form.get('interests')
+        user.interests = convert_readable_to_interests(request.form.get('interests'))
         user.about_me = request.form.get('about_me')
         db.session.commit()
         return redirect(url_for('views.profile', username=user.username))
 
-    return render_template('profile.html', user=user, is_current_user=is_current_user, user_interests = list_of_maps_to_string(user.interests))
+    return render_template('profile.html', user=user, is_current_user=is_current_user, user_interests = convert_interests_to_readable(user.interests))
 
 @views.route('/my_events',methods=['GET','POST'])
 @login_required
