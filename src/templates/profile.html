@@ -8,9 +8,9 @@
             <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="first_name">Name</label>
                 {% if is_current_user %}
-                    <input type="text" id="first_name" name="first_name" class="form-control form-field w-full px-3 py-2 border rounded-md" value="{{ user.first_name }}" required>
+                    <input type="text" id="first_name" name="first_name" class="form-control form-field w-full px-3 py-2 border rounded-md" value="{{ user.username }}" required>
                 {% else %}
-                    <p class="form-control form-field w-full px-3 py-2 border rounded-md">{{ user.first_name }}</p>
+                    <p class="form-control form-field w-full px-3 py-2 border rounded-md">{{ user.username }}</p>
                 {% endif %}
             </div>
             <div class="mb-4">

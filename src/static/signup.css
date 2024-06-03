@@ -23,6 +23,50 @@ body {
   }
 }
 
+.flash-message-banner {
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  opacity: 0.9;
+  border-radius: 8px; 
+  animation: fadeInOut 5s ease-in-out;
+}
+
+.flash-message-banner.success {
+  background-color: #38a169; 
+}
+
+.flash-message-banner.error {
+  background-color: #e53e3e;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.close-btn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 20px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.close-btn:hover {
+  color: black;
+}
+
 
 .bg-opacity-75 {
   --tw-bg-opacity: 0.75;

@@ -16,17 +16,24 @@ class Job(db.Model):
     time_hours = db.Column(db.Integer, nullable=False)
     time_minutes = db.Column(db.Integer, nullable=False)
     pay = db.Column(db.Float, nullable=False)
-    skills = db.Column(db.String(2000), nullable=False)
+    skills = db.Column(db.String(500), nullable=False)
+    location = db.Column(db.String(100), nullable=False)
+    eligibility_min = db.Column(db.Integer, nullable=False)
+    eligibility_max = db.Column(db.Integer, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     posted_date = db.Column(db.DateTime(timezone=True), default=func.now())
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
 
-    def __init__(self, title, description, time_hours, time_minutes, pay, skills):
+    def __init__(self, title, description, time_hours, time_minutes, pay, skills, location, eligibility_min, eligibility_max, user_id):
         self.title = title
         self.description = description
         self.time_hours = time_hours
         self.time_minutes = time_minutes
         self.pay = pay
         self.skills = skills
+        self.location = location
+        self.eligibility_min = eligibility_min
+        self.eligibility_max = eligibility_max
+        self.user_id = user_id
 
 class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -58,20 +65,22 @@ class Resume(db.Model):
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(150), unique=True)
-    password = db.Column(db.String(150))
-    first_name = db.Column(db.String(150))
-    interests = db.Column(db.String(1000))  
-    location = db.Column(db.String(250))    
-    about_me = db.Column(db.String(1000))   
+    username = db.Column(db.String(150), unique=True, nullable=False)
+    email = db.Column(db.String(150), unique=True, nullable=False)
+    password = db.Column(db.String(150), nullable=False)
+    location = db.Column(db.String(150), nullable=True)
+    interests = db.Column(db.Text, nullable=True)
+    about_me = db.Column(db.Text, nullable=True)
 
     messages = db.relationship("Message")
     jobs = db.relationship("Job")
 
-    def __init__(self, email, first_name, password, interests="", location="", about_me=""):
+    def __init__(self, email, username, password, interests="", location="", about_me=""):
         self.email = email
         self.password = password
-        self.first_name = first_name
+        self.username = username
         self.interests = interests
         self.location = location
         self.about_me = about_me
+
+        

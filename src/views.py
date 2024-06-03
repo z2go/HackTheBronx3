@@ -1,14 +1,24 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, jsonify
 from flask_login import login_required, current_user
 from .models import Event, Job, Resume, User
 from . import db
 
+import openai
+import os
+
 views = Blueprint('views', __name__)
 
-#So that all html files can access the username if logged in
+
+#So that all html files can access the these variables
 @views.context_processor
 def inject_user():
-    return dict(user=current_user if current_user.is_authenticated else None)
+    maps_api_key = os.getenv('MAPS_API_KEY')
+    openai_gpt_key = os.getenv('OPENAI_GPT_KEY')
+    return dict(
+        user=current_user if current_user.is_authenticated else None,
+        maps_api_key=maps_api_key,
+        openai_gpt_key=openai_gpt_key
+    )
 
 @views.route('/complete_account', methods=['POST'])
 @login_required
@@ -33,20 +43,31 @@ def upload_job():
     time_minutes = request.form.get('Task_Time_Minutes')
     pay = request.form.get('Task_Pay')
     skills = request.form.get('Task_Skills')
-    
+    location = request.form.get('job_location')
+    eligibility_min = request.form.get('Eligibility_Min')
+    eligibility_max = request.form.get('Eligibility_Max')
+
     new_job = Job(
-        title=title, 
-        description=description, 
-        time_hours=int(time_hours), 
-        time_minutes=int(time_minutes), 
-        pay=float(pay), 
-        skills=skills, 
+        title=title,
+        description=description,
+        time_hours=int(time_hours),
+        time_minutes=int(time_minutes),
+        pay=float(pay),
+        skills=skills,
+        location=location,
+        eligibility_min=int(eligibility_min),
+        eligibility_max=int(eligibility_max),
         user_id=current_user.id
     )
     db.session.add(new_job)
     db.session.commit()
 
     return redirect(url_for('views.explore_jobs'))
+
+@views.route('/job/<int:job_id>', methods=['GET'])
+def view_job(job_id):
+    job = Job.query.get_or_404(job_id)
+    return render_template('view_job.html', job=job)
 
 @views.route('/upload_resume', methods=['POST'])
 # @login_required
@@ -73,7 +94,7 @@ def upload_resume():
 def upload_event():
     event_title = request.form.get('eventTitle')
     event_description = request.form.get('eventDescription')
-    event_creator = current_user.first_name
+    event_creator = current_user.username
     event_date = request.form.get('eventDate')
 
     new_event = Event(event_title,event_description, event_creator, event_date)
@@ -102,7 +123,7 @@ def events():
 @views.route('/network', methods=['GET'])
 @login_required
 def network():
-    return render_template("network.html", friends=[User("Sample Email", "Test User", "Rizzity Skibidi")])
+    return render_template("network.html", friends = db.session.query(User.username).all())
 
 @views.route('/notifications', methods=['GET'])
 @login_required
@@ -115,6 +136,30 @@ def explore_jobs():
     jobs = Job.query.all()
     return render_template('explore_jobs.html', jobs=jobs)
 
+@views.route('/find_job_matches', methods=['POST'])
+@login_required
+def find_job_matches():
+    data = request.get_json()
+    user_id = data.get('user_id')
+    user = User.query.get(user_id)
+    jobs = Job.query.all()
+
+    openai.api_key = os.getenv('OPENAI-GPT-KEY')
+
+    prompt = f"User information:\nName: {user.first_name}\nInterests: {user.interests}\nLocation: {user.location}\n\nJobs available:\n"
+    for job in jobs:
+        prompt += f"Title: {job.title}\nDescription: {job.description}\nTime: {job.time_hours} hours {job.time_minutes} minutes\nPay: ${job.pay}\nSkills: {job.skills}\nEligibility: {job.eligibility_min} - {job.eligibility_max} years\nLocation: {job.location}\n\n"
+
+    response = openai.Completion.create(
+        model="gpt-4-turbo-preview",
+        prompt=prompt + "\nPlease rank these jobs for the user based on their suitability.",
+        max_tokens=500
+    )
+
+    ranked_jobs = response.choices[0].text.strip().split('\n')
+
+    return jsonify({"ranked_jobs": ranked_jobs})
+
 @views.route('/explore_resumes', methods=['GET'])
 @login_required
 def explore_resumes():
@@ -122,19 +167,19 @@ def explore_resumes():
     # print(resumes[0])
     return render_template('explore_resumes.html', resumes=resumes)
 
-@views.route('/profile/<int:user_id>', methods=['GET', 'POST'])
+@views.route('/profile/<username>', methods=['GET', 'POST'])
 @login_required
-def profile(user_id):
-    user = User.query.get_or_404(user_id)
+def profile(username):
+    user = User.query.filter_by(username=username).first_or_404()
     is_current_user = (user.id == current_user.id)
 
     if request.method == 'POST' and is_current_user:
-        user.first_name = request.form.get('first_name')
+        user.username = request.form.get('first_name')
         user.location = request.form.get('location')
         user.interests = request.form.get('interests')
         user.about_me = request.form.get('about_me')
         db.session.commit()
-        return redirect(url_for('views.profile', user_id=user.id))
+        return redirect(url_for('views.profile', username=user.username))
 
     return render_template('profile.html', user=user, is_current_user=is_current_user)
 

@@ -3,38 +3,28 @@
 {% block content %}
 <div class="p-4">
     <h2 class="text-2xl font-bold mb-4">Explore Jobs</h2>
-    <a href="{{ url_for('views.my_events') }}">
+    <a href="#">
         <button class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">My Jobs</button>
-     </a>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    </a>
+
+    <button id="find-job-matches" class="block text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-4">Find Job Matches</button>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
         {% for job in jobs %}
         <div class="bg-white p-4 rounded-lg shadow-md">
             <h3 class="text-xl font-semibold mb-2">{{ job.title }}</h3>
             <p class="text-gray-700 mb-2">{{ job.description }}</p>
             <p class="text-gray-700 mb-2"><strong>Time:</strong> {{ job.time_hours }} hours {{ job.time_minutes }} minutes</p>
-            <p class="text-gray-700 mb-2"><strong>Pay:</strong> ${{ job.pay }}</p>
             <p class="text-gray-700 mb-2"><strong>Needed Skills:</strong> {{ job.skills }}</p>
-            <p class="text-gray-700 mb-2"><strong>Needed Skills:</strong> {{ job.skills }}</p>
+            <p class="text-gray-700 mb-2"><strong>Eligibility:</strong> {{ job.eligibility_min }} - {{ job.eligibility_max }} years</p>
+            <div id="job-map-{{ job.id }}" style="height: 200px;" class="mb-2"></div>
             <p class="text-gray-500 text-sm">Posted on {{ job.posted_date.strftime('%Y-%m-%d') }}</p>
 
-            {% if job.creator == current_user.first_name %}
-                <button class="block text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-                    Cancel Job
-                </button>
-                {% endif %}
-
-                {% if job.creator != current_user.first_name %}
-                <button id="{{job.id}}" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-                    Apply
-                </button>
-
-            {% endif %}
-
-        </div>        
-            <!-- Make so it connects to the messaging system with the person who created the job -->
-            <a href="{{ url_for('views.network') }}" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Apply</a> 
+            <a href="{{ url_for('views.view_job', job_id=job.id) }}">
+                <button class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-2">View More</button>
+            </a>
         </div>
         {% endfor %}
     </div>
 </div>
+
 {% endblock %}
