@@ -43,7 +43,7 @@ class Event(db.Model):
     description = db.Column(db.String(5000))
     creator = db.Column(db.String(150), default=current_user)
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
-    date_happening = db.Integer()
+    date_happening = db.Column(db.Integer, nullable=False)
     
     def __init__(self, title, description, creator, date_happening):
         self.title = title

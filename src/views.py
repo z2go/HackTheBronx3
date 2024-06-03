@@ -1,9 +1,9 @@
 from flask import Blueprint, render_template, request, redirect, url_for, jsonify, session, Flask
 from flask_login import login_required, current_user
-import socketio
+# import socketio
 from .models import Event, Job, Resume, User
 from . import db
-from flask_socketio import join_room, leave_room, send, SocketIO
+# from flask_socketio import join_room, leave_room, send, SocketIO
 import random
 from string import ascii_uppercase
 
@@ -154,7 +154,7 @@ def create_new_code(length):
         if code not in rooms:
             break
         
-@socketio.on("message")
+# @socketio.on("message")
 def message(data):
     room = session.get("room")
     if room not in rooms:
@@ -164,7 +164,7 @@ def message(data):
         "name": session.get("name"),
         "message": data["data"]
     }
-    send(content, to=room)
+    # send(content, to=room)
     rooms[room]["messages"].append(content)
     print(f"{session.get('name')} said: {data['data']}")
 
