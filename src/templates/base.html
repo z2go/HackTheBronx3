@@ -264,7 +264,7 @@
                 </div>
             </div>
             <div id="userMenuDropdown" class="absolute right-0 mt-10 py-4 w-48 bg-white rounded-md shadow-xl hidden z-20">
-                <p class="block px-4 py-2 text-sm text-gray-700">{{ user.username }}</p>
+                <p class="block px-4 py-2 text-sm text-gray-700">{{ current_user.username }}</p>
                 <a href="{{ url_for('auth.logout') }}" class="block px-4 py-2 text-sm text-red-700 hover:bg-gray-100">Logout</a>
             </div>
         </div>

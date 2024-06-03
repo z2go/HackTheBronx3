@@ -22,8 +22,9 @@ class Job(db.Model):
     eligibility_max = db.Column(db.Integer, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     posted_date = db.Column(db.DateTime(timezone=True), default=func.now())
+    creator = db.Column(db.String(150), default=current_user)
 
-    def __init__(self, title, description, time_hours, time_minutes, pay, skills, location, eligibility_min, eligibility_max, user_id):
+    def __init__(self, title, description, time_hours, time_minutes, pay, skills, location, eligibility_min, eligibility_max, user_id, creator):
         self.title = title
         self.description = description
         self.time_hours = time_hours
@@ -34,6 +35,7 @@ class Job(db.Model):
         self.eligibility_min = eligibility_min
         self.eligibility_max = eligibility_max
         self.user_id = user_id
+        self.creator = creator
 
 class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -56,12 +58,15 @@ class Resume(db.Model):
     Resume_Description = db.Column(db.String)
     Resume_Skills = db.Column(db.String)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    creator = db.Column(db.String(150), default=current_user)
     
-    def __init__(self, First_Name, Last_Name, Resume_Description, Resume_Skills):
+    def __init__(self, First_Name, Last_Name, Resume_Description, Resume_Skills, user_id, creator):
         self.First_Name = First_Name
         self.Last_Name = Last_Name
         self.Resume_Description = Resume_Description
         self.Resume_Skills = Resume_Skills
+        self.user_id = user_id
+        self.creator = creator
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)

@@ -3,7 +3,7 @@ from flask_login import login_required, current_user
 from .models import Event, Job, Resume, User
 from . import db
 
-import openai
+# import openai
 import os
 
 views = Blueprint('views', __name__)
@@ -46,6 +46,7 @@ def upload_job():
     location = request.form.get('job_location')
     eligibility_min = request.form.get('Eligibility_Min')
     eligibility_max = request.form.get('Eligibility_Max')
+    event_creator = current_user.username
 
     new_job = Job(
         title=title,
@@ -57,7 +58,8 @@ def upload_job():
         location=location,
         eligibility_min=int(eligibility_min),
         eligibility_max=int(eligibility_max),
-        user_id=current_user.id
+        user_id=current_user.id,
+        creator = event_creator 
     )
     db.session.add(new_job)
     db.session.commit()
@@ -76,13 +78,15 @@ def upload_resume():
     Last_Name = request.form.get('Resume_Last_Name')
     Resume_Description = request.form.get('Resume_Description')
     Resume_Skills = request.form.get('Resume_Skills')
+    event_creator = current_user.username
     ##TODO
     new_resume = Resume(
         First_Name=First_Name,
         Last_Name=Last_Name,
         Resume_Description=Resume_Description, 
         Resume_Skills=Resume_Skills, 
-        user_id=current_user.id
+        user_id=current_user.id,
+        creator = event_creator
     )
     db.session.add(new_resume)
     db.session.commit()
@@ -190,12 +194,25 @@ def my_events():
 
     return render_template("my_events.html", events = events, current_user=current_user)
 
-@views.route('/remove_job/<int:job_id>', methods=['GET'])
+@views.route('/remove_job/<int:job_id>', methods=['GET','POST'])
 def remove_job(job_id):
     job = Job.query.get_or_404(job_id)
+
     db.session.delete(job)
     db.session.commit()
-    return render_template('view_job.html', job=job)
+
+    jobs = Job.query.all()
+    return redirect(url_for('views.explore_jobs'))
+
+@views.route('/remove_resume/<int:resume_id>', methods=['GET','POST'])
+def remove_resume(resume_id):
+    resume = Resume.query.get_or_404(resume_id)
+
+    db.session.delete(resume)
+    db.session.commit()
+
+    resumes = Resume.query.all()
+    return redirect(url_for('views.explore_resumes'))
 
 @views.route('/remove_event/<int:event_id>', methods=['GET','POST'])
 def remove_event(event_id):
