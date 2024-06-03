@@ -6,8 +6,10 @@
     <a href="#">
         <button class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">My Jobs</button>
     </a>
+    <form method="POST" action="{{ url_for('views.find_job_matches') }}">
+        <button type="submit" id="find-job-matches" class="block text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-4" >Find Job Matches</button>
+    </form>
 
-    <button id="find-job-matches" class="block text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-4" action="{{ url_for('views.find_job_matches') }}">Find Job Matches</button>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {% for job in jobs %}
         <div class="bg-white p-4 rounded-lg shadow-md">
@@ -16,13 +18,10 @@
             <p class="text-gray-700 mb-2"><strong>Time:</strong> {{ job.time_hours }} hours {{ job.time_minutes }} minutes</p>
             <p class="text-gray-700 mb-2"><strong>Needed Skills:</strong> {{ job.skills }}</p>
             <p class="text-gray-700 mb-2"><strong>Eligibility:</strong> {{ job.eligibility_min }} - {{ job.eligibility_max }} years</p>
-            <div id="job-map-{{ job.id }}" style="height: 200px;" class="mb-2"></div>
+            <div class="map" id="job-map-{{ job.id }}" data-lat="{{ job.location.split(',')[0] }}" data-lng="{{ job.location.split(',')[1] }}" data-location-input="location-{{ job.id }}" style="height: 200px;" class="mb-2"></div>
             <p class="text-gray-700 mb-2"><strong>Creator: </strong> {{ job.creator }}</p>
             <p class="text-gray-500 text-sm">Posted on {{ job.posted_date.strftime('%Y-%m-%d') }}</p>
 
-            <a href="{{ url_for('views.view_job', job_id=job.id) }}">
-                <button class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-2">View More</button>
-            </a>
             {% if job.creator == current_user.username %}
             <a href="{{ url_for('views.remove_job', job_id=job.id) }}">
                 <button class="block text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-2">Delete Job</button>
@@ -31,6 +30,59 @@
         </div>
         {% endfor %}
     </div>
+
+    <div id="ai-recommendations" class="mt-8 hidden">
+        <h3 class="text-2xl font-bold mb-4">AI Recommended Jobs</h3>
+        <div id="ai-job-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <!-- AI recommended jobs will be inserted here -->
+        </div>
+    </div>
 </div>
 
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        function initMap() {
+            const maps = document.querySelectorAll('.map');
+            maps.forEach((mapElement) => {
+                const initialLat = parseFloat(mapElement.dataset.lat) || 40.8448;
+                const initialLng = parseFloat(mapElement.dataset.lng) || -73.8648;
+                
+                const map = new google.maps.Map(mapElement, {
+                    center: { lat: initialLat, lng: initialLng },
+                    zoom: 12,
+                });
+
+                new google.maps.Marker({
+                    map: map,
+                    position: { lat: initialLat, lng: initialLng },
+                });
+            });
+        }
+
+        google.maps.event.addDomListener(window, 'load', initMap);
+
+        document.getElementById('find-job-matches').addEventListener('click', async function(event) {
+            event.preventDefault();
+            const response = await fetch('{{ url_for("views.find_job_matches") }}', {
+                method: 'POST'
+            });
+            const data = await response.json();
+            const aiRecommendations = document.getElementById('ai-recommendations');
+            const aiJobList = document.getElementById('ai-job-list');
+            aiJobList.innerHTML = '';
+
+            const jobElement = document.createElement('div');
+            jobElement.classList.add('bg-white', 'p-4', 'rounded-lg', 'shadow-md');
+            jobElement.innerHTML = `
+                <h3 class="text-xl font-semibold mb-2">AI Job Recommendations</h3>
+                <pre class="text-gray-700 mb-2">${data.ranked_jobs.join("\n")}</pre>
+            `;
+            aiJobList.appendChild(jobElement);
+
+            aiRecommendations.classList.remove('hidden');
+        });
+    });
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key={{ maps_api_key }}&libraries=places"></script>
 {% endblock %}

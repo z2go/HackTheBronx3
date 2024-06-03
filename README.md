@@ -22,4 +22,5 @@
 <ul>
     <li>Default login: Username: Testing, Password: testing123</li>
     <li>To get map feature working, create .env file in main directory and write MAPS_API_KEY={the api key}. The google maps api key can be obtained from these steps: https://developers.google.com/maps/documentation/javascript/get-api-key</li>
+    <li>Similarly, to get the "find job matches" working, to that same .env file, add OPENAI_GPT_KEY={the api key}. This can be obtained through the OpenAI API website</li>
 </ul>

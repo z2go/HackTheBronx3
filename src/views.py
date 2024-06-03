@@ -179,18 +179,16 @@ def explore_jobs():
     jobs = Job.query.all()
     return render_template('explore_jobs.html', jobs=jobs)
 
-@views.route('/find_job_matches', methods=['POST'])
-@login_required
+@views.route('/find_job_matches', methods=['POST', 'GET'])
+# @login_required
 def find_job_matches():
-    data = request.get_json()
-    user_id = data.get('user_id')
-    user = User.query.get(user_id)
+    user = current_user
     jobs = Job.query.all()
 
     client = openai.OpenAI(api_key=os.getenv('OPENAI_GPT_KEY'))
 
-    conversation = {}
-    prompt = f"User information:\nName: {user.first_name}\nInterests: {user.interests}\nLocation: {user.location}\n\nJobs available:\n"
+    conversation = []
+    prompt = f"User information:\nName: {user.username}\nInterests: {user.interests}\nLocation: {user.location}\n\nJobs available:\n"
     for job in jobs:
         prompt += f"Title: {job.title}\nDescription: {job.description}\nTime: {job.time_hours} hours {job.time_minutes} minutes\nPay: ${job.pay}\nSkills: {job.skills}\nEligibility: {job.eligibility_min} - {job.eligibility_max} years\nLocation: {job.location}\n\n"
     conversation.append({'role': 'system', 'content': prompt})
@@ -204,6 +202,7 @@ def find_job_matches():
     )
 
     ranked_jobs = response.choices[0].message.content.strip().split('\n')
+    print(ranked_jobs)
 
     return jsonify({"ranked_jobs": ranked_jobs})
 
